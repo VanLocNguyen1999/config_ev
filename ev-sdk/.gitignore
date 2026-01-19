@@ -1,0 +1,12 @@
+.idea/
+.vscode/
+**/*.cmake
+build/
+cmake-build-debug/
+**/*.env
+**/*.log
+**/*.obj
+.clang-format
+*.cproject
+*.project
+*.settings

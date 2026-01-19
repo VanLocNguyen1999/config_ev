@@ -1,0 +1,3 @@
+[submodule "ev-sdk"]
+	path = ev-sdk
+	url = https://github.com/Selex-Motors/ev-sdk.git
