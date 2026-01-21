@@ -11,35 +11,24 @@
 
 
 static void uart_module_recv_data_callback(uint8_t _data, void* _arg) {
+    if (!_arg) return;
+    uart_module_t *modem = (uart_module_t*) _arg;
+    char* buff = (char*)modem->buff;
+    if (modem->buff_index < (modem->buff_size - 1)) {
+        buff[modem->buff_index] = (char)_data;
 
-	if (!_arg) return;
-	uart_module_t *modem = (uart_module_t*) _arg;
-	 char* buff = (char*)modem->buff;
-
-    if (_data == '<') {
-    	modem->is_new_data = true;
-    	modem->buff_index = 0;
-        buff[modem->buff_index++] = (char) _data;
-    }
-    else if (_data == '>') {
-        if (modem->is_new_data) {
-            if (modem->buff_index < modem->buff_size - 1) {
-                buff[modem->buff_index++] = (char) _data;
-            }
-            buff[modem->buff_index] = '\0';
-            modem->is_new_data = false;
-            modem->rx_flag = true;
+        if (modem->buff_index > 0 &&
+            buff[modem->buff_index] == 'n' &&
+            buff[modem->buff_index - 1] == '\\')
+        {
+            buff[modem->buff_index - 1] = '\0';
+            modem->is_new_data = true;
         }
-    }
-    else {
-        if (modem->is_new_data) {
-            if (modem->buff_index < modem->buff_size - 1) {
-                buff[modem->buff_index++] = (char) _data;
-            } else {
-            	modem->is_new_data = false;
-            	modem->buff_index = 0;
-            }
+        else {
+            modem->buff_index++;
         }
+    } else {
+        modem->buff_index = 0;
     }
 }
 
@@ -62,6 +51,21 @@ int32_t uart_module_init(uart_module_t *uart_module, sm_hal_uart_t *driver, uint
     return 0;
 }
 
+int32_t uart_module_get_data(uart_module_t *uart_module,char* data_recv){
+
+	if(!uart_module->is_new_data) return -1;
+    strncpy(data_recv, uart_module->buff, uart_module->buff_index);
+    uart_module->is_new_data = false;
+    data_recv[uart_module->buff_index] = '\0';
+    uart_module->buff_index = 0;
+    return 0;
+}
+int32_t uart_module_clear_data(uart_module_t *uart_module){
+//    strncpy(data_recv, uart_module->buff, uart_module->buff_index);
+//    data_recv[uart_module->buff_index] = '\0';
+    uart_module->buff_index = 0;
+    return 0;
+}
 int32_t uart_module_set_cmd(uart_module_t *uart_module, char* cmd, int32_t timeout){
 
     if (!uart_module || ! cmd) {

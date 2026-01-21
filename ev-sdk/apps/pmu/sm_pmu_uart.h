@@ -16,30 +16,24 @@ extern "C"{
 
 typedef void sm_pmu_uart_t;
 enum {
-    CMD_POLL = 0,
-    CMD_INPUT,
-    CMD_OUTPUT,
-    CMD_VOLT_CHARGER,
-
-    CMD_LEFT_LIGHT,
-    CMD_RIGH_LIGHT,
-    CMD_HORN,
-    CMD_EMERGENCY,
-    CMD_HIGH_BEAM_LIGHT,
-    CMD_POS_BEAM_LIGHT,
-    CMD_LOW_BEAM_LIGHT,
-    CMD_CHARGER,
-    CMD_MC_POWER,
-
-    CMD_RESPONSE,
-    CMD_NUMBER
+    CMD_IDLE_READ = 0,
+	CMD_IDLE_WRITE,
+    CMD_IDLE_NUMBER
 };
 
-extern const char *UART_CMD[CMD_NUMBER];
+typedef enum {
+    UART_CFG_IDLE = 0,
+	UART_CFG_READ,
+	UART_CFG_WRITE,
+	UART_CFG_NUMBER
+}UART_CFG_STATE;
+
 sm_pmu_uart_t* sm_pmu_uart_create_default(void);
 //int32_t sm_pmu_uart_handle_rec_data(sm_pmu_uart_t* _this, void* _arg);
 int32_t sm_pmu_uart_polling_msg(sm_pmu_uart_t* _this, void* _arg);
 int32_t sm_pmu_uart_cmd_msg(sm_pmu_uart_t* _this, void* _arg);
+
+int32_t sm_uart_process(sm_pmu_uart_t* _this, void* _arg);
 
 bool sm_cmd_push(sm_pmu_uart_t* _this, char* data);
 bool sm_cmd_pop(sm_pmu_uart_t* _this, char* data);

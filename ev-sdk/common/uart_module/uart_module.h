@@ -35,4 +35,7 @@ int32_t uart_module_write(uart_module_t *uart_module, char* cmd);
 int32_t uart_module_read(uart_module_t *uart_module, char* cmd, uint32_t len);
 int32_t uart_module_is_busy(uart_module_t *uart_module);
 
+int32_t uart_module_get_data(uart_module_t *uart_module,char* data_recv);
+int32_t uart_module_clear_data(uart_module_t *uart_module);
+
 #endif /* UART_MODULE_H_ */

@@ -152,6 +152,7 @@
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.usenewlibnosys.1767629847" name="Do not use syscalls (--specs=nosys.specs)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.usenewlibnosys" value="true" valueType="boolean"/>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.other.1260924093" name="Other linker flags" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.other" value="--specs=rdimon.specs" valueType="string"/>
+								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.useprintffloat.731092958" name="Use float with nano printf (-u _printf_float)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.useprintffloat" value="true" valueType="boolean"/>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.linker.input.1456766564" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -241,25 +242,16 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="ev_io_handle|unit_test/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/apps/pmu"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/apps/pmu/ev_io_handle"/>
+						<entry excluding="sm_pmu_regis_handle.c|sm_pmu_ev_protect.c|sm_pmu_bpm_handle.c|sm_pmu_stm.c|ev_io_handle|unit_test/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/apps/pmu"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/bsp"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/common/ev_data"/>
 						<entry excluding="sm_ev_opt_storage.c|sm_ev_odo_storage.c|sm_ev_manu_storage.c|sm_ev_sec_storage.c|ssl_file" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/common/storage"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/common/uart_module"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/cores/inc"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/cores/sch"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/cores/stm"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/hals"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/libs/canopen"/>
 						<entry excluding="ra_hal_rtc.c|ra_hal_spi.c|ra_hal_adc.c|ra_hal_i2c.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/platforms/ra4m2_mcu/hal"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/platforms/ra4m2_mcu/pmu/porting"/>
-						<entry excluding="testing" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/services/bp_management"/>
-						<entry excluding="testing/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/services/charger"/>
-						<entry excluding="testing|modules/sm_ev_module.c|sm_ev_service.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/services/ev"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="ev-sdk/services/ev_error_handle"/>
-						<entry excluding="testing" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/services/ev_io"/>
-						<entry excluding="testing/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/services/pms"/>
 						<entry excluding="sm_syscalls.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/utils"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="ra"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="ra_gen"/>

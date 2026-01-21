@@ -51,8 +51,6 @@ void hal_entry(void){
     if(timer4){
         sm_hal_timer_agt_set_callback(timer4, sm_hal_timer4_cb, pmu);
     }
-	sm_stm_set_event(PMU_STM_EVENT_ENTER_STARTING);
-//	sm_pmu_bpm_first_bp_auth(pmu);
 	__enable_irq();
     while(1){
 
