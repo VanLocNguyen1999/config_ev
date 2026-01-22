@@ -27,8 +27,9 @@ static void sm_hal_timer2_cb(void* _arg){
 static void sm_hal_timer4_cb(void* _arg){
 
 	FSP_PARAMETER_NOT_USED(_arg);
-//    sm_pmu_app_t* app = (sm_pmu_app_t*)_arg;
+    sm_pmu_app_t* app = (sm_pmu_app_t*)_arg;
 //    sm_pmu_assign_process(app);
+//	sm_pmu_uart_process(app);
 }
 
 void hal_entry(void){

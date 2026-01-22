@@ -29,7 +29,8 @@ static uint8_t g_software_version[4] = {0, 0, 2, 0x00};
 static sm_pmu_app_t g_pmu_app_default = {
         .m_sch_task = NULL,
         .m_co = NULL,
-        .m_co_interface = NULL
+        .m_co_interface = NULL,
+		.m_ev_config = NULL
 
 };
 
@@ -49,7 +50,7 @@ void sm_pmu_uart_process(void *_arg) {
 	}
 	uart_ctr++;
 	if (uart_ctr > 10000) {
-		sm_pmu_uart_polling_msg(_impl(_arg)->m_pmu_uart, _arg);
+		sm_pmu_uart_polling_msg(_impl(_arg)->m_pmu_uart);
 		uart_ctr = 0;
 	}
 
@@ -94,7 +95,7 @@ static int32_t sm_pmu_co_create(sm_pmu_app_t* _this){
 
 static int32_t sm_uart_service_create(sm_pmu_app_t* _this){
 
-    sm_pmu_uart_t * pmu_uart = sm_pmu_uart_create_default();
+    sm_pmu_uart_t * pmu_uart = sm_pmu_uart_create_default(_this->m_ev_config);
     if (!pmu_uart)
     {
         return -1;
@@ -131,7 +132,7 @@ sm_pmu_app_t* sm_pmu_app_create(){
         LOG_ERR(TAG, "PMU is loaded the configuration FAILURE, please check flash memory again");
         return NULL;
     }
-
+    pmu_app->m_ev_config = sm_ev_config_para_create(pmu_app->m_co);
     if(sm_uart_service_create(pmu_app) < 0){
 
         LOG_ERR(TAG, "...");

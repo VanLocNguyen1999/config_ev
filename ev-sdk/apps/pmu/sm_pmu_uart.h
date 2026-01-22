@@ -12,14 +12,29 @@ extern "C"{
 #endif
 #include "uart_module.h"
 #include "ascii_msg_builder.h"
+#include "sm_ev_config_co.h"
 #include "stdio.h"
 
 typedef void sm_pmu_uart_t;
 enum {
-    CMD_IDLE_READ = 0,
-	CMD_IDLE_WRITE,
-    CMD_IDLE_NUMBER
+    CMD_READ = 0,
+	CMD_WRITE,
+	CMD_UV,
+	CMD_I_BAT,
+	CMD_ECO,
+	CMD_SPORT,
+	CMD_EXIT,
+    CMD_NUMBER
 };
+
+typedef enum {
+	UART_WRITE_IDLE = 0,
+	UART_WRITE_UV_PROTECT,
+	UART_WRITE_IBAT_LIMIT,
+	UART_WRITE_ECO_SPEED,
+	UART_WRITE_SPORT_SPEED,
+	UART_WRITE_NUMBER
+}UART_WRITE_STATE;
 
 typedef enum {
     UART_CFG_IDLE = 0,
@@ -28,9 +43,9 @@ typedef enum {
 	UART_CFG_NUMBER
 }UART_CFG_STATE;
 
-sm_pmu_uart_t* sm_pmu_uart_create_default(void);
+sm_pmu_uart_t* sm_pmu_uart_create_default(sm_ev_config_para_t *m_ev_config);
 //int32_t sm_pmu_uart_handle_rec_data(sm_pmu_uart_t* _this, void* _arg);
-int32_t sm_pmu_uart_polling_msg(sm_pmu_uart_t* _this, void* _arg);
+int32_t sm_pmu_uart_polling_msg(sm_pmu_uart_t* _this);
 int32_t sm_pmu_uart_cmd_msg(sm_pmu_uart_t* _this, void* _arg);
 
 int32_t sm_uart_process(sm_pmu_uart_t* _this, void* _arg);

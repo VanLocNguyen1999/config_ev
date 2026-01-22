@@ -32,12 +32,14 @@ extern "C"{
 
 #include "ev_error_handle.h"
 
-
+#include "sm_ev_config_co.h"
 typedef struct {
     sm_sch_t* m_sch_task;
 
     sm_co_if_t* m_co_interface;
     sm_co_t* m_co;
+
+    sm_ev_config_para_t *m_ev_config;
 
     sm_pmu_uart_t* m_pmu_uart;
 }sm_pmu_app_t;
