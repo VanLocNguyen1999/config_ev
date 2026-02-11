@@ -196,15 +196,15 @@ int32_t sm_bsp_pmu_io_set_node_id3                          (uint8_t _value)
 //    return R_IOPORT_PinWrite(&g_ioport_ctrl, BSP_IO_PORT_01_PIN_11, _value);
 }
 
-int32_t sm_bsp_led1_set(uint8_t _value)
+int32_t sm_bsp_led_green_set(uint8_t _value)
 {
 	return sm_hal_io_set_value(g_led_1, _value);
 }
-int32_t sm_bsp_led2_set(uint8_t _value)
+int32_t sm_bsp_led_red_set(uint8_t _value)
 {
 	return sm_hal_io_set_value(g_led_2, _value);
 }
-int32_t sm_bsp_led3_set(uint8_t _value)
+int32_t sm_bsp_led_blue_set(uint8_t _value)
 {
 	return sm_hal_io_set_value(g_led_3, _value);
 }

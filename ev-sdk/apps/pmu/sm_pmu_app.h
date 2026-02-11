@@ -8,52 +8,38 @@
 #ifdef __cplusplus
 extern "C"{
 #endif
+#include "sm_bsp_pmu.h"
+#include "sm_types.h"
+#include "sm_elapsed_timer.h"
 
-#include "sm_sv_bp.h"
-#include "sm_sv_charger.h"
-#include "sm_sv_io.h"
-#include "sm_sv_pms.h"
+enum {
 
-#include "sm_stm.h"
-#include "sm_core_sch.h"
-#include "sm_core_co.h"
+	RUNNING_LIGHT, //G sáng -> B sáng -> Y sáng -> Lặp lại.
+	PING_PONG, // G -> B -> Y -> B -> (Về G).
+	BINARY_COUNTER, // 2 => 0 => 2 => 6
+	POLICE_STRO, // (G nháy nhanh 3 lần) -> (Y nháy nhanh 3 lần) -> B luôn tắt (hoặc B nháy cùng G).
+	THE_WAVE, // 1. G sáng. 2. G + B cùng sáng. 3. B + Y cùng sáng (G tắt). 4. Y sáng (B tắt). 5. Tắt hết (Reset).
+	ACCORDION, // (G + Y) sáng => (B) sáng, (G + Y) tắt => (G + Y) sáng, (B) tắt
+	SEVERE_ALERT, //(G + B) ON, (Y) OFF (50ms). => (G + B) OFF, (Y) ON (50ms).
+	SEQUENCE_BUILD_UP, //G-B-Y (Delay 500ms)=> G-B-Y (Delay 200ms) => G-B-Y (Delay 50ms) => G-B-Y (on 1s)
+	RAIOW_FLOW,
+	RANDOM_GLITCH,
+	MAX_NUMBER
+};
 
-#include "sm_ev_module.h"
-
-#include "sm_pmu_stm.h"
-#include "sm_pmu_bpm_handle.h"
-#include "ev_io_handle.h"
-
-#include "sm_pmu_uart.h"
-#include "sm_ev_storage.h"
-#include "sm_pmu_storage.h"
-#include "sm_pmu_ev_protect.h"
-#include "sm_pmu_regis_handle.h"
-
-#include "ev_error_handle.h"
-
-#include "sm_ev_config_co.h"
 typedef struct {
-    sm_sch_t* m_sch_task;
 
-    sm_co_if_t* m_co_interface;
-    sm_co_t* m_co;
+	elapsed_timer_t m_state_timeout;
+	elapsed_timer_t m_led_timeout;
+    uint8_t m_state;
+} led_t;
 
-    sm_ev_config_para_t *m_ev_config;
-
-    sm_pmu_uart_t* m_pmu_uart;
+typedef struct {
+    led_t m_led;
 }sm_pmu_app_t;
 
-sm_pmu_app_t* sm_pmu_app_create     ();
-
-int32_t sm_pmu_app_init             (sm_pmu_app_t* _app);
-
-int32_t sm_pmu_app_process          (sm_pmu_app_t* _app);
-void sm_co_if_proc                  (void* _arg);
-void sm_bp_service_proc             (void* _arg);
-void sm_pms_service_proc     		(void* _arg);
-void sm_pmu_uart_process			(void *_arg);
-int32_t sm_pmu_assign_process		(void* _arg);
+void sm_led_init     (void);
+int32_t sm_pmu_app_process          (void);
 extern sm_pmu_app_t* g_pmu_app;
 
 #ifdef __cplusplus

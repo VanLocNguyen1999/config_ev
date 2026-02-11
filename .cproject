@@ -242,7 +242,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="sm_pmu_regis_handle.c|sm_pmu_ev_protect.c|sm_pmu_bpm_handle.c|sm_pmu_stm.c|ev_io_handle|unit_test/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/apps/pmu"/>
+						<entry excluding="canopen|sm_ev_config_co.c|sm_pmu_co.c|sm_pmu_uart.c|sm_pmu_storage.c|sm_pmu_regis_handle.c|sm_pmu_ev_protect.c|sm_pmu_bpm_handle.c|sm_pmu_stm.c|ev_io_handle|unit_test/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/apps/pmu"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/bsp"/>
 						<entry excluding="sm_ev_opt_storage.c|sm_ev_odo_storage.c|sm_ev_manu_storage.c|sm_ev_sec_storage.c|ssl_file" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/common/storage"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/common/uart_module"/>
