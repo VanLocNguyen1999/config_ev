@@ -30,6 +30,9 @@ int32_t sm_bsp_pmu_io_set_node_id1              (uint8_t _value);
 int32_t sm_bsp_pmu_io_set_node_id2              (uint8_t _value);
 int32_t sm_bsp_pmu_io_set_node_id3              (uint8_t _value);
 
+int32_t sm_bsp_led1_set(uint8_t _value);
+int32_t sm_bsp_led2_set(uint8_t _value);
+int32_t sm_bsp_led3_set(uint8_t _value);
 
 sm_hal_io_t* sm_bsp_pmu_get_node_id1            ();
 

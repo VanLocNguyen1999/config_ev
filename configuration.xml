@@ -565,12 +565,15 @@
     </config>
   </raModuleConfiguration>
   <raPinConfiguration>
+    <symbolicName propertyId="p000.symbolic_name" value="LED1"/>
     <symbolicName propertyId="p100.symbolic_name" value="OUT_12V_ENABLE"/>
     <symbolicName propertyId="p101.symbolic_name" value="IN_12V_DETECTOR"/>
     <symbolicName propertyId="p104.symbolic_name" value="NodeID1"/>
+    <symbolicName propertyId="p109.symbolic_name" value="LED2"/>
     <symbolicName propertyId="p111.symbolic_name" value="NodeID3"/>
     <symbolicName propertyId="p112.symbolic_name" value="NodeID2"/>
     <symbolicName propertyId="p201.symbolic_name" value="CAN_MODE"/>
+    <symbolicName propertyId="p402.symbolic_name" value="LED3"/>
     <pincfg active="true" name="R7FA4M2AB3CFL.pincfg" selected="true" symbol="g_bsp_pin_cfg">
       <configSetting altId="adc0.mode.custom" configurationId="adc0.mode"/>
       <configSetting altId="can0.crx.p102" configurationId="can0.crx"/>
@@ -579,6 +582,8 @@
       <configSetting altId="debug0.mode.swd" configurationId="debug0.mode"/>
       <configSetting altId="debug0.swclk.p300" configurationId="debug0.swclk"/>
       <configSetting altId="debug0.swdio.p108" configurationId="debug0.swdio"/>
+      <configSetting altId="p000.output.low" configurationId="p000"/>
+      <configSetting altId="p000.gpio_mode.gpio_mode_out.low" configurationId="p000.gpio_mode"/>
       <configSetting altId="p100.output.low" configurationId="p100"/>
       <configSetting altId="p100.gpio_mode.gpio_mode_out.low" configurationId="p100.gpio_mode"/>
       <configSetting altId="p101.input" configurationId="p101"/>
@@ -592,6 +597,8 @@
       <configSetting altId="p104.gpio_mode.gpio_mode_out.low" configurationId="p104.gpio_mode"/>
       <configSetting altId="p108.debug0.swdio" configurationId="p108"/>
       <configSetting altId="p108.gpio_mode.gpio_mode_peripheral" configurationId="p108.gpio_mode"/>
+      <configSetting altId="p109.output.low" configurationId="p109"/>
+      <configSetting altId="p109.gpio_mode.gpio_mode_out.low" configurationId="p109.gpio_mode"/>
       <configSetting altId="p111.output.low" configurationId="p111"/>
       <configSetting altId="p111.gpio_mode.gpio_mode_out.low" configurationId="p111.gpio_mode"/>
       <configSetting altId="p112.output.low" configurationId="p112"/>
@@ -604,6 +611,8 @@
       <configSetting altId="p207.gpio_mode.gpio_mode_peripheral" configurationId="p207.gpio_mode"/>
       <configSetting altId="p300.debug0.swclk" configurationId="p300"/>
       <configSetting altId="p300.gpio_mode.gpio_mode_peripheral" configurationId="p300.gpio_mode"/>
+      <configSetting altId="p402.output.low" configurationId="p402"/>
+      <configSetting altId="p402.gpio_mode.gpio_mode_out.low" configurationId="p402.gpio_mode"/>
       <configSetting altId="sci4.mode.asynchronous.free" configurationId="sci4.mode"/>
       <configSetting altId="sci4.rxd.p206" configurationId="sci4.rxd"/>
       <configSetting altId="sci4.txd.p207" configurationId="sci4.txd"/>

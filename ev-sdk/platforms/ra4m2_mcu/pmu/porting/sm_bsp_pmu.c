@@ -17,6 +17,10 @@ sm_hal_io_t *g_io_out_nodeid_1;
 sm_hal_io_t *g_io_out_nodeid_2;
 sm_hal_io_t *g_io_out_nodeid_3;
 
+sm_hal_io_t *g_led_1;
+sm_hal_io_t *g_led_2;
+sm_hal_io_t *g_led_3;
+
 sm_hal_can_t *g_pmu_can;
 
 sm_hal_timer_t *g_pmu_timer3;
@@ -92,6 +96,18 @@ static void bsp_io_init(){
     sm_hal_io_open(g_io_in_12v_det, SM_HAL_IO_INPUT);
 
     /* OUTPUT */
+
+    g_led_1   = sm_hal_io_init(LED1);
+    sm_hal_io_open(g_led_1, SM_HAL_IO_OUTPUT);
+    sm_hal_io_set_value(g_led_1, 0);
+
+    g_led_2   = sm_hal_io_init(LED2);
+    sm_hal_io_open(g_led_2, SM_HAL_IO_OUTPUT);
+    sm_hal_io_set_value(g_led_2, 0);
+
+    g_led_3   = sm_hal_io_init(LED3);
+    sm_hal_io_open(g_led_3, SM_HAL_IO_OUTPUT);
+    sm_hal_io_set_value(g_led_3, 0);
 
     g_io_out_nodeid_1   = sm_hal_io_init(NodeID1);
     sm_hal_io_open(g_io_out_nodeid_1, SM_HAL_IO_OUTPUT);
@@ -178,6 +194,19 @@ int32_t sm_bsp_pmu_io_set_node_id3                          (uint8_t _value)
 {
     return sm_hal_io_set_value (g_io_out_nodeid_3, _value);
 //    return R_IOPORT_PinWrite(&g_ioport_ctrl, BSP_IO_PORT_01_PIN_11, _value);
+}
+
+int32_t sm_bsp_led1_set(uint8_t _value)
+{
+	return sm_hal_io_set_value(g_led_1, _value);
+}
+int32_t sm_bsp_led2_set(uint8_t _value)
+{
+	return sm_hal_io_set_value(g_led_2, _value);
+}
+int32_t sm_bsp_led3_set(uint8_t _value)
+{
+	return sm_hal_io_set_value(g_led_3, _value);
 }
 /*--------------------------------12V--------------------------------*/
 int32_t sm_bsp_pmu_io_get_12v_det(){
