@@ -21,15 +21,11 @@
 sm_pmu_app_t* g_pmu_app = NULL;
 
 static sm_pmu_app_t g_pmu_app_default;
-void sm_led_init(){
-	sm_pmu_app_t* pmu_app = &g_pmu_app_default;
-	g_pmu_app = &g_pmu_app_default;
-	pmu_app->m_led.m_state = RUNNING_LIGHT;
-    elapsed_timer_resetz(&pmu_app->m_led.m_state_timeout,TIME_5_MIU);
-    sm_bsp_led_green_set(0);
-    sm_bsp_led_red_set(0);
-	sm_bsp_led_blue_set(0);
-}
+//void sm_led_init(){
+//	sm_pmu_app_t* pmu_app = &g_pmu_app_default;
+//	g_pmu_app = &g_pmu_app_default;
+//	led_reset();
+//}
 
 static void led_reset(void) {
     // 1. Đảm bảo hàm rand() có giá trị ngẫu nhiên thực sự (nên gọi srand ở hàm init)
@@ -263,6 +259,12 @@ static void led_random_glitch_light(void) {
     sm_bsp_led_green_set(0);
     sm_bsp_led_blue_set(0);
     sm_bsp_led_red_set(0);
+}
+
+void sm_led_init(){
+	sm_pmu_app_t* pmu_app = &g_pmu_app_default;
+	g_pmu_app = &g_pmu_app_default;
+	led_reset();
 }
 
 int32_t sm_pmu_app_process(void){
