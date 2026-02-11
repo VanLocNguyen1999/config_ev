@@ -175,6 +175,7 @@ int32_t sm_uart_process(sm_pmu_uart_t* _this, void* _arg){
 	if(uart_module_get_data(uart_module,data_recv) < 0){
 	    return -1;
 	}
+	_impl(_this)->m_pause_poll = 1;
 	char cmd_buf[10] = "";
 	char data_buf[10]= "";
 	parse_command(data_recv, cmd_buf, data_buf);
@@ -231,22 +232,22 @@ static void msg_cmd_read(const char* data, void* _arg)  {
 
 static void msg_cmd_write_uv_res_cb(void* data, int32_t res, void *_arg) {
 
-	uart_module_t *uart_module = (uart_module_t*) _impl(_arg)->m_base;
 	char _msg[400] = "";
-	float value = 30.0f;//*(float*)data;
+	float value = *(float*)data;
 	if (res == CMD_SUCCESS) {
 
 		snprintf(_msg, sizeof(_msg),
 				"\r\n============================================\r\n"
-						"	Ghi thanh cong UV = %0.2f (V)\r\n"
+						"	Ghi thanh cong, UV = %0.2f (V)\r\n"
 						"============================================\r\n",
 						value);
 	} else if (res == CMD_FAILURE) {
+		const InspectionConfig_t* p_config = sm_ev_config_get_para(_impl(_arg)->m_ev_config);
 		snprintf(_msg, sizeof(_msg),
 				"\r\n============================================\r\n"
-						"	Ghi that bai UV = %0.2f (V)\r\n"
+						"	Ghi that bai, UV = %0.2f (V)\r\n"
 						"============================================\r\n",
-						value);
+						p_config->uv_protect);
 	}
 
 	memcpy(_impl(_arg)->m_cmd_current,_msg,sizeof(_msg));
@@ -283,13 +284,13 @@ static void msg_cmd_write_ibat_limit_res_cb(void* data, int32_t res, void *_arg)
 
 		snprintf(_msg, sizeof(_msg),
 				"\r\n============================================\r\n"
-						"	Ghi thanh cong I_BAT = %0.2f (A)\r\n"
+						"	Ghi thanh cong, I_BAT = %0.2f (A)\r\n"
 						"============================================\r\n",
 						value);
 	} else if (res == CMD_FAILURE) {
 		snprintf(_msg, sizeof(_msg),
 				"\r\n============================================\r\n"
-						"	Ghi that bai I_BAT = %0.2f (A)\r\n"
+						"	Ghi that bai, I_BAT = %0.2f (A)\r\n"
 						"============================================\r\n",
 						value);
 	}
@@ -328,13 +329,13 @@ static void msg_cmd_write_eco_sport_res_cb(void* data, int32_t res, void *_arg) 
 
 		snprintf(_msg, sizeof(_msg),
 				"\r\n============================================\r\n"
-						"	Ghi thanh cong ECO_SPEED = %02d (km/h)\r\n"
+						"	Ghi thanh cong, ECO_SPEED = %02d (km/h)\r\n"
 						"============================================\r\n",
 						value);
 	} else if (res == CMD_FAILURE) {
 		snprintf(_msg, sizeof(_msg),
 				"\r\n============================================\r\n"
-						"	Ghi that bai ECO_SPEED = %02d (km/h)\r\n"
+						"	Ghi that bai, ECO_SPEED = %02d (km/h)\r\n"
 						"============================================\r\n",
 						value);
 	}
@@ -373,13 +374,13 @@ static void msg_cmd_write_speed_sport_res_cb(void* data, int32_t res, void *_arg
 
 		snprintf(_msg, sizeof(_msg),
 				"\r\n============================================\r\n"
-						"	Ghi thanh cong SPORT_SPEED = %02d (km/h)\r\n"
+						"	Ghi thanh cong, SPORT_SPEED = %02d (km/h)\r\n"
 						"============================================\r\n",
 						value);
 	} else if (res == CMD_FAILURE) {
 		snprintf(_msg, sizeof(_msg),
 				"\r\n============================================\r\n"
-						"	Ghi that bai SPORT_SPEED = %02d (km/h)\r\n"
+						"	Ghi that bai, SPORT_SPEED = %02d (km/h)\r\n"
 						"============================================\r\n",
 						value);
 	}

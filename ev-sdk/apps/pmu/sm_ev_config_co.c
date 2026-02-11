@@ -45,20 +45,11 @@ typedef enum {
     PURPOSE_FOR_VEHICLE_INSPECTION,   // Dùng cho hậu kiểm nhà máy
     PURPOSE_FOR_DEBUG                 // Dùng để Debug
 } Vehicle_purpose_t;
-
-typedef struct {
-    float ibat_limit;     // Giới hạn dòng Pin
-    float uv_protect;     // Bảo vệ thấp áp
-    uint8_t sport_speed;      // Tốc độ tối đa ở mode sport
-    uint8_t eco_speed;      // Tốc độ tối đa ở mode sport
-} InspectionConfig_t;
-
 typedef struct {
 	Vehicle_purpose_t       purpose;
 	Purpose_sw_cfg_t   		switch_config;
     InspectionConfig_t      inspection_config;
 } sm_purpose_cf_t;
-
 
 typedef struct{
     sm_co_t* m_co;
@@ -80,6 +71,11 @@ sm_ev_config_para_t* sm_ev_config_para_create(sm_co_t *m_co){
 
     return (sm_ev_config_para_t*)&g_ev_config;
 }
+
+const InspectionConfig_t* sm_ev_config_get_para(sm_ev_config_para_t* _this) {
+
+    return &(_impl(_this)->m_data_config.inspection_config);
+}
 static void sm_bp_co_wrirte_sdo_cb(SM_SDO_STATUS_t _status, int32_t _tx_err,
 		int32_t _rx_err, void *_arg) {
 
@@ -96,7 +92,7 @@ static void sm_bp_co_wrirte_sdo_cb(SM_SDO_STATUS_t _status, int32_t _tx_err,
 	} else if (_status == SM_SDO_ST_ABORT) {
 	       if(ev_co->m_cmd.m_cb){
 	    	   ev_co->m_cmd.m_cb(ev_co->m_cmd.m_data,
-	        						CMD_SUCCESS,
+	    			   	   	   	   CMD_FAILURE,
 									ev_co->m_cmd.m_arg);
 	        }
 	}

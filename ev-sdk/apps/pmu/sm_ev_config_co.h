@@ -26,6 +26,13 @@ typedef enum {
 	EV_CFG_NUMBER
 } EV_CFG_CMD;
 
+typedef struct {
+    float ibat_limit;     // Giới hạn dòng Pin
+    float uv_protect;     // Bảo vệ thấp áp
+    uint8_t sport_speed;      // Tốc độ tối đa ở mode sport
+    uint8_t eco_speed;      // Tốc độ tối đa ở mode sport
+} InspectionConfig_t;
+
 typedef void (*sm_ev_config_cmd_fn_t)(void* , int32_t , void *);
 typedef struct sm_ev_config_cmd{
 	EV_CFG_CMD m_cmd;
@@ -35,6 +42,7 @@ typedef struct sm_ev_config_cmd{
 }sm_ev_config_cmd_t;
 int32_t sm_ev_config_co_set_cmd(sm_ev_config_para_t* _this,  sm_ev_config_cmd_t _cmd);
 sm_ev_config_para_t* sm_ev_config_para_create(sm_co_t *m_co);
+const InspectionConfig_t* sm_ev_config_get_para(sm_ev_config_para_t* _this);
 void sm_ev_set_uv_protect(sm_ev_config_para_t *_this, float uv_protect);
 void sm_ev_set_ibat_limit(sm_ev_config_para_t *_this, float ibat_limit);
 void sm_ev_set_eco_speed(sm_ev_config_para_t *_this, uint8_t eco_speed);
