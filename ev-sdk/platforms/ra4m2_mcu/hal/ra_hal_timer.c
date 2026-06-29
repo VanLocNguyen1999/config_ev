@@ -67,3 +67,16 @@ void sm_hal_timer_irq(sm_hal_timer_t *_this){
     }
 }
 
+int32_t sm_hal_timer_set_counter(sm_hal_timer_t *_this, uint32_t counter){
+
+    if (!_this)
+        return -1;
+    return R_GPT_CounterSet(impl(_this)->m_channel->p_ctrl, counter);
+}
+uint32_t sm_hal_timer_get_counter(sm_hal_timer_t *_this){
+
+	if(!_this) return 0;
+	timer_status_t time_status;
+	fsp_err_t err = R_GPT_StatusGet (impl(_this)->m_channel->p_ctrl, &time_status);
+	return time_status.counter;
+}

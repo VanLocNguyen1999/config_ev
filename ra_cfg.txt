@@ -74,7 +74,7 @@ FSP Configuration
     HOCO 16MHz
     PLL Src: XTAL
     PLL Div /1
-    PLL Mul x10.0
+    PLL Mul x16.0
     PLL2 Disabled
     PLL2 Div /2
     PLL2 Mul x20.0
@@ -106,8 +106,8 @@ FSP Configuration
       P103 33 CAN0_CTX0 - Low - "Peripheral mode" CMOS None "AGT2: AGTIO2; CAN0: CTX0; GPT_OPS0: GTOWUP; GPT2: GTIOC2A; QSPI0: QIO3; SCI0: CTSRTS0" - IO - - 
       P104 32 GPIO NodeID1 Low None "Output mode (Initial Low)" CMOS - "AGT2: AGTEE2; GPT_POEG1: GTETRGB; GPT1: GTIOC1B; ICU0: IRQ01; QSPI0: QIO2" - IO - - 
       P108 25 DEBUG0_SWDIO - Low - "Peripheral mode" CMOS None "AGT3: AGTOA3; DEBUG0: SWDIO; DEBUG0: TMS; GPT_OPS0: GTOULO; GPT0: GTIOC0B; SCI9: CTSRTS9; SPI0: SSLA0" - IO - - 
-      P109 26 GPIO LED2 Low - "Output mode (Initial Low)" CMOS - "AGT3: AGTOB3; CGC0: CLKOUT; DEBUG0: TDO; DEBUG0: TRACESWO; GPT_OPS0: GTOVUP; GPT1: GTIOC1A; SCI9: SDA9; SCI9: TXD9; SPI0: MOSIA" - IO - - 
-      P110 27 - - - - Disabled - - "AGT3: AGTEE3; DEBUG0: TDI; GPT_OPS0: GTOVLO; GPT1: GTIOC1B; ICU0: IRQ03; SCI2: CTSRTS2; SCI9: RXD9; SCI9: SCL9; SPI0: MISOA" - None - - 
+      P109 26 GPIO one_write_tx Low - "Output mode (Initial Low)" CMOS - "AGT3: AGTOB3; CGC0: CLKOUT; DEBUG0: TDO; DEBUG0: TRACESWO; GPT_OPS0: GTOVUP; GPT1: GTIOC1A; SCI9: SDA9; SCI9: TXD9; SPI0: MOSIA" - IO - - 
+      P110 27 ICU0_IRQ03 one_write_rx - IRQ03 "IRQ mode" - None "AGT3: AGTEE3; DEBUG0: TDI; GPT_OPS0: GTOVLO; GPT1: GTIOC1B; ICU0: IRQ03; SCI2: CTSRTS2; SCI9: RXD9; SCI9: SCL9; SPI0: MISOA" - IO - - 
       P111 28 GPIO NodeID3 Low None "Output mode (Initial Low)" CMOS - "AGT5: AGTOA5; GPT3: GTIOC3A; ICU0: IRQ04; SCI2: SCK2; SCI9: SCK9; SPI0: RSPCKA" - IO - - 
       P112 29 GPIO NodeID2 Low - "Output mode (Initial Low)" CMOS - "AGT5: AGTOB5; GPT3: GTIOC3B; QSPI0: QSSL; SCI1: SCK1; SCI2: SDA2; SCI2: TXD2; SPI0: SSLA0; SSI0: SSIBCK0" - IO - - 
       P200 21 - - - - Disabled - - "ICU0: NMI" - None - - 
@@ -174,6 +174,9 @@ FSP Configuration
     Parameter Checking: Default (BSP)
     Code Flash Programming Enable: Disabled
     Data Flash Programming Enable: Enabled
+    
+  Module "External IRQ (r_icu)"
+    Parameter Checking: Default (BSP)
     
   HAL
     Instance "g_ioport I/O Port (r_ioport)"
@@ -298,8 +301,8 @@ FSP Configuration
       General: Counter Bit Width: AGT 16-bit
       General: Channel: 4
       General: Mode: Periodic
-      General: Period: 10
-      General: Period Unit: Milliseconds
+      General: Period: 1
+      General: Period Unit: Microseconds
       Output: Duty Cycle Percent (only applicable in PWM mode): 50
       General: Count Source: PCLKB
       Output: AGTOA Output: Disabled
@@ -310,7 +313,7 @@ FSP Configuration
       Input: Enable Pin: Enable Pin Not Used
       Input: Trigger Edge: Trigger Edge Rising
       Interrupts: Callback: timer4_ISR
-      Interrupts: Underflow Interrupt Priority: Priority 7
+      Interrupts: Underflow Interrupt Priority: Priority 1
       
     Instance "g_can0 CAN (r_can)"
       General: Name: g_can0
@@ -509,4 +512,13 @@ FSP Configuration
       Callback: ISR_Flash
       Flash Ready Interrupt Priority: Priority 11
       Flash Error Interrupt Priority: Priority 11
+      
+    Instance "g_external_irq0 External IRQ (r_icu)"
+      Name: g_external_irq0
+      Channel: 3
+      Trigger: Both Edges
+      Digital Filtering: Enabled
+      Digital Filtering Sample Clock (Only valid when Digital Filtering is Enabled): PCLK / 32
+      Callback: one_write_rx_cb
+      Pin Interrupt Priority: Priority 2
       

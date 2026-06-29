@@ -22,8 +22,8 @@ sci_uart_instance_ctrl_t g_io_uart_ctrl;
 
 baud_setting_t g_io_uart_baud_setting = {
 /* Baud rate calculated with 0.160% error. */.semr_baudrate_bits_b.abcse = 0,
-		.semr_baudrate_bits_b.abcs = 0, .semr_baudrate_bits_b.bgdm = 0,
-		.cks = 0, .brr = 194, .mddr = (uint8_t) 256,
+		.semr_baudrate_bits_b.abcs = 0, .semr_baudrate_bits_b.bgdm = 1,
+		.cks = 1, .brr = 155, .mddr = (uint8_t) 256,
 		.semr_baudrate_bits_b.brme = false };
 
 /** UART extended configuration for UARTonSCI HAL driver */
@@ -106,8 +106,8 @@ can_bit_timing_cfg_t g_can0_bit_timing_cfg =
 can_bit_timing_cfg_t g_can0_bit_timing_cfg =
 		{
 				/* Actual bitrate: 500000 Hz. Actual Bit Time Ratio: 75 %. */.baud_rate_prescaler =
-						1 + 2 /* Division value of baud rate prescaler */,
-				.time_segment_1 = 14, .time_segment_2 = 5,
+						1 + 5 /* Division value of baud rate prescaler */,
+				.time_segment_1 = 11, .time_segment_2 = 4,
 				.synchronization_jump_width = 4, };
 #endif
 
@@ -395,16 +395,16 @@ const agt_extended_cfg_t g_timer4_extend = { .count_source = AGT_CLOCK_PCLKB,
 		.trigger_edge = AGT_TRIGGER_EDGE_RISING, .counter_bit_width =
 				AGT_COUNTER_BIT_WIDTH_16, };
 const timer_cfg_t g_timer4_cfg = { .mode = TIMER_MODE_PERIODIC,
-/* Actual period: 0.01 seconds. Actual duty: 50%. */.period_counts =
-		(uint32_t) 0x927c, .duty_cycle_counts = 0x493e, .source_div =
-		(timer_source_div_t) 3, .channel = 4, .p_callback = timer4_ISR,
+/* Actual period: 0.000001 seconds. Actual duty: 50%. */.period_counts =
+		(uint32_t) 0x30, .duty_cycle_counts = 0x18, .source_div =
+		(timer_source_div_t) 0, .channel = 4, .p_callback = timer4_ISR,
 /** If NULL then do not add & */
 #if defined(NULL)
     .p_context           = NULL,
 #else
 		.p_context = &NULL,
 #endif
-		.p_extend = &g_timer4_extend, .cycle_end_ipl = (7),
+		.p_extend = &g_timer4_extend, .cycle_end_ipl = (1),
 #if defined(VECTOR_NUMBER_AGT4_INT)
     .cycle_end_irq       = VECTOR_NUMBER_AGT4_INT,
 #else
@@ -425,7 +425,7 @@ const agt_extended_cfg_t g_timer2_extend = { .count_source = AGT_CLOCK_PCLKB,
 				AGT_COUNTER_BIT_WIDTH_16, };
 const timer_cfg_t g_timer2_cfg = { .mode = TIMER_MODE_PERIODIC,
 /* Actual period: 0.001 seconds. Actual duty: 50%. */.period_counts =
-		(uint32_t) 0x7530, .duty_cycle_counts = 0x3a98, .source_div =
+		(uint32_t) 0xbb80, .duty_cycle_counts = 0x5dc0, .source_div =
 		(timer_source_div_t) 0, .channel = 2, .p_callback = timer2_ISR,
 /** If NULL then do not add & */
 #if defined(NULL)
@@ -454,7 +454,7 @@ const agt_extended_cfg_t g_timer1_extend = { .count_source = AGT_CLOCK_PCLKB,
 				AGT_COUNTER_BIT_WIDTH_16, };
 const timer_cfg_t g_timer1_cfg = { .mode = TIMER_MODE_PERIODIC,
 /* Actual period: 0.001 seconds. Actual duty: 50%. */.period_counts =
-		(uint32_t) 0x7530, .duty_cycle_counts = 0x3a98, .source_div =
+		(uint32_t) 0xbb80, .duty_cycle_counts = 0x5dc0, .source_div =
 		(timer_source_div_t) 0, .channel = 1, .p_callback = timer1_ISR,
 /** If NULL then do not add & */
 #if defined(NULL)
@@ -483,7 +483,7 @@ const agt_extended_cfg_t g_timer0_extend = { .count_source = AGT_CLOCK_PCLKB,
 				AGT_COUNTER_BIT_WIDTH_16, };
 const timer_cfg_t g_timer0_cfg = { .mode = TIMER_MODE_PERIODIC,
 /* Actual period: 0.01 seconds. Actual duty: 50%. */.period_counts =
-		(uint32_t) 0x927c, .duty_cycle_counts = 0x493e, .source_div =
+		(uint32_t) 0xea60, .duty_cycle_counts = 0x7530, .source_div =
 		(timer_source_div_t) 3, .channel = 1, .p_callback = timer0_ISR,
 /** If NULL then do not add & */
 #if defined(NULL)
@@ -580,7 +580,7 @@ const gpt_extended_cfg_t g_timer3_extend =
 
 const timer_cfg_t g_timer3_cfg = { .mode = TIMER_MODE_PERIODIC,
 /* Actual period: 0.001 seconds. Actual duty: 50%. */.period_counts =
-		(uint32_t) 0xea60, .duty_cycle_counts = 0x7530, .source_div =
+		(uint32_t) 0x17700, .duty_cycle_counts = 0xbb80, .source_div =
 		(timer_source_div_t) 0, .channel = 0, .p_callback = timer3_ISR,
 /** If NULL then do not add & */
 #if defined(NULL)

@@ -13,6 +13,7 @@
             <slot name="P104.CM33" secure="true"/>
             <slot name="P108.CM33" secure="true"/>
             <slot name="P109.CM33" secure="true"/>
+            <slot name="P110.CM33" secure="true"/>
             <slot name="P111.CM33" secure="true"/>
             <slot name="P112.CM33" secure="true"/>
         </peripheral>
@@ -33,6 +34,9 @@
         <peripheral name="AGT4.CM33" group="AGT" security="s"/>
         <peripheral name="CAN0.CM33" group="CAN" security="s"/>
         <peripheral name="SCI4.CM33" group="SCI" security="s"/>
+        <peripheral name="ICU_EXT_IRQ.CM33">
+            <slot name="ICU_EXT_IRQ3.CM33" secure="true"/>
+        </peripheral>
         <peripheral name="ICU.CM33">
             <slot name="IRQ0.CM33" secure="true"/>
             <slot name="IRQ1.CM33" secure="true"/>
@@ -49,6 +53,7 @@
             <slot name="IRQ12.CM33" secure="true"/>
             <slot name="IRQ13.CM33" secure="true"/>
             <slot name="IRQ14.CM33" secure="true"/>
+            <slot name="IRQ15.CM33" secure="true"/>
         </peripheral>
     </partition>
 </azone>

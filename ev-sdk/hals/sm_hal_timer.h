@@ -81,5 +81,17 @@ int32_t sm_hal_timer_stop(sm_hal_timer_t *_this);
  * @param _this
  */
 void sm_hal_timer_irq(sm_hal_timer_t *_this); // Calling function in timer interrupt
-
+/**
+ *
+ * @param _this
+ * @param counter
+ * @return
+ */
+int32_t sm_hal_timer_set_counter(sm_hal_timer_t *_this, uint32_t counter);
+/**
+ *
+ * @param _this
+ * @return
+ */
+uint32_t sm_hal_timer_get_counter(sm_hal_timer_t *_this);
 #endif /* SM_HAL_TIMER_H_ */

@@ -22,7 +22,7 @@
     <node id="board.clock.subclk.freq" option="board.clock.subclk.freq.32768"/>
     <node id="board.clock.pll.source" option="board.clock.pll.source.xtal"/>
     <node id="board.clock.pll.div" option="board.clock.pll.div.1"/>
-    <node id="board.clock.pll.mul" option="board.clock.pll.mul.100"/>
+    <node id="board.clock.pll.mul" option="board.clock.pll.mul.160"/>
     <node id="board.clock.pll.display" option="board.clock.pll.display.value"/>
     <node id="board.clock.pll2.source" option="board.clock.pll2.source.disabled"/>
     <node id="board.clock.pll2.div" option="board.clock.pll2.div.2"/>
@@ -54,6 +54,7 @@
       <configSetting altId="can0.ctx.p103" configurationId="can0.ctx" isUsedByDriver="true" peripheral="CAN0"/>
       <configSetting altId="debug0.swclk.p300" configurationId="debug0.swclk" isUsedByDriver="true" peripheral="DEBUG0"/>
       <configSetting altId="debug0.swdio.p108" configurationId="debug0.swdio" isUsedByDriver="true" peripheral="DEBUG0"/>
+      <configSetting altId="irq0.irq03.p110" configurationId="irq0.irq03" isUsedByDriver="true" peripheral="ICU0"/>
       <configSetting altId="p000.output.low" configurationId="p000"/>
       <configSetting altId="p100.output.low" configurationId="p100"/>
       <configSetting altId="p101.input" configurationId="p101"/>

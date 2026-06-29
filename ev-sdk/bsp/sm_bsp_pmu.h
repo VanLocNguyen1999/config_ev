@@ -40,6 +40,9 @@ sm_hal_io_t* sm_bsp_pmu_get_node_id2            ();
 
 sm_hal_io_t* sm_bsp_pmu_get_node_id3            ();
 
+sm_hal_io_t* sm_bsp_get_one_write_tx			();
+sm_hal_io_t* sm_bsp_get_one_write_rx			();
+
 /* CAN */
 void sm_bsp_pmu_can_send                        (int32_t _id, const char* _data);
 

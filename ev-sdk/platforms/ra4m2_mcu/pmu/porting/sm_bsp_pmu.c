@@ -17,7 +17,8 @@ sm_hal_io_t *g_io_out_nodeid_1;
 sm_hal_io_t *g_io_out_nodeid_2;
 sm_hal_io_t *g_io_out_nodeid_3;
 
-sm_hal_io_t *g_led_1;
+sm_hal_io_t *g_one_write_tx;
+sm_hal_io_t *g_one_write_rx;
 sm_hal_io_t *g_led_2;
 sm_hal_io_t *g_led_3;
 
@@ -88,47 +89,15 @@ int32_t sm_bsp_pmu_init(void){
     __enable_irq();
     return 0;
 }
-
-
 static void bsp_io_init(){
-    /* IN PUT */
-    g_io_in_12v_det	= sm_hal_io_init(IN_12V_DETECTOR);
-    sm_hal_io_open(g_io_in_12v_det, SM_HAL_IO_INPUT);
 
-    /* OUTPUT */
+    g_one_write_tx   = sm_hal_io_init(one_write_tx);
+    sm_hal_io_open(g_one_write_tx, SM_HAL_IO_OUTPUT);
+    sm_hal_io_set_value(g_one_write_tx, 0);
 
-    g_led_1   = sm_hal_io_init(LED1);
-    sm_hal_io_open(g_led_1, SM_HAL_IO_OUTPUT);
-    sm_hal_io_set_value(g_led_1, 0);
+    g_one_write_rx = sm_hal_io_init(one_write_rx);
+	sm_hal_io_open(g_one_write_rx, SM_HAL_IO_INPUT);
 
-    g_led_2   = sm_hal_io_init(LED2);
-    sm_hal_io_open(g_led_2, SM_HAL_IO_OUTPUT);
-    sm_hal_io_set_value(g_led_2, 0);
-
-    g_led_3   = sm_hal_io_init(LED3);
-    sm_hal_io_open(g_led_3, SM_HAL_IO_OUTPUT);
-    sm_hal_io_set_value(g_led_3, 0);
-
-    g_io_out_nodeid_1   = sm_hal_io_init(NodeID1);
-    sm_hal_io_open(g_io_out_nodeid_1, SM_HAL_IO_OUTPUT);
-    sm_hal_io_set_value(g_io_out_nodeid_1, 0);
-
-    g_io_out_nodeid_2   = sm_hal_io_init(NodeID2);
-    sm_hal_io_open(g_io_out_nodeid_2, SM_HAL_IO_OUTPUT);
-    sm_hal_io_set_value(g_io_out_nodeid_2, 0);
-
-    g_io_out_nodeid_3   = sm_hal_io_init(NodeID3);
-    sm_hal_io_open(g_io_out_nodeid_3, SM_HAL_IO_OUTPUT);
-    sm_hal_io_set_value(g_io_out_nodeid_3, 0);
-//
-    g_io_out_12v_en = sm_hal_io_init(OUT_12V_ENABLE);
-    sm_hal_io_open(g_io_out_12v_en, SM_HAL_IO_OUTPUT);
-    sm_hal_io_set_value(g_io_out_12v_en, 1);
-//    R_IOPORT_PinWrite(&g_ioport_ctrl, BSP_IO_PORT_01_PIN_00, 1);
-
-    g_io_out_can_mode = sm_hal_io_init(CAN_MODE);
-    sm_hal_io_open(g_io_out_can_mode, SM_HAL_IO_OUTPUT);
-    sm_hal_io_set_value(g_io_out_can_mode, 0);
 }
 
 static void bsp_can_init(){
@@ -145,8 +114,8 @@ static inline void bsp_timer_init(){
     g_pmu_timer2 = sm_hal_timer_agt_init(&g_timer2, 0);
     sm_hal_timer_agt_start(g_pmu_timer2);
 
-    g_pmu_timer4 = sm_hal_timer_agt_init(&g_timer4, 0);
-    sm_hal_timer_agt_start(g_pmu_timer4);
+//    g_pmu_timer4 = sm_hal_timer_agt_init(&g_timer4, 0);
+//    sm_hal_timer_agt_start(g_pmu_timer4);
 }
 
 static void bsp_flash_init(){
@@ -170,61 +139,13 @@ sm_hal_flash_t* sm_bsp_pmu_get_data_flash(){
 sm_hal_uart_t* sm_bsp_pmu_get_uart_port(){
     return g_pmu_uart;
 }
-
-/*--------------------------------CAN MODE--------------------------------*/
-int32_t sm_bsp_pmu_io_set_deactice_can_bus(){
-    return sm_hal_io_set_value(g_io_out_can_mode, SM_HAL_IO_ON);
-}
-int32_t sm_bsp_pmu_io_set_active_can_bus(){
-    return sm_hal_io_set_value(g_io_out_can_mode, SM_HAL_IO_OFF);
-}
-/*--------------------------------NodeID--------------------------------*/
-int32_t sm_bsp_pmu_io_set_node_id1                          (uint8_t _value)
+sm_hal_io_t* sm_bsp_get_one_write_tx()
 {
-    return sm_hal_io_set_value (g_io_out_nodeid_1, _value);
-//    return R_IOPORT_PinWrite(&g_ioport_ctrl, BSP_IO_PORT_01_PIN_04, _value);
+	return g_one_write_tx;
 }
-int32_t sm_bsp_pmu_io_set_node_id2                          (uint8_t _value)
+sm_hal_io_t* sm_bsp_get_one_write_rx()
 {
-    return sm_hal_io_set_value (g_io_out_nodeid_2, _value);
-//    return R_IOPORT_PinWrite(&g_ioport_ctrl, BSP_IO_PORT_01_PIN_12, _value);
-
-}
-int32_t sm_bsp_pmu_io_set_node_id3                          (uint8_t _value)
-{
-    return sm_hal_io_set_value (g_io_out_nodeid_3, _value);
-//    return R_IOPORT_PinWrite(&g_ioport_ctrl, BSP_IO_PORT_01_PIN_11, _value);
-}
-
-int32_t sm_bsp_led_green_set(uint8_t _value)
-{
-	return sm_hal_io_set_value(g_led_1, _value);
-}
-int32_t sm_bsp_led_red_set(uint8_t _value)
-{
-	return sm_hal_io_set_value(g_led_2, _value);
-}
-int32_t sm_bsp_led_blue_set(uint8_t _value)
-{
-	return sm_hal_io_set_value(g_led_3, _value);
-}
-/*--------------------------------12V--------------------------------*/
-int32_t sm_bsp_pmu_io_get_12v_det(){
-	uint8_t ret = 0;
-	fsp_err_t err = R_IOPORT_PinRead(&g_ioport_ctrl, BSP_IO_PORT_01_PIN_01,&ret);
-
-    if (err) {
-       return 0;
-    }
-    return ret ? 0: 1;
-}
-
-int32_t sm_bsp_pmu_io_set_12V_power                          (uint8_t _value){
-
-
-	uint8_t cmd = (_value == 1) ? 0 : 1;
-	return sm_hal_io_set_value(g_io_out_12v_en, cmd);
-//		return R_IOPORT_PinWrite(&g_ioport_ctrl, BSP_IO_PORT_01_PIN_00, cmd);
+	return g_one_write_rx;
 }
 /*--------------------------------CAN--------------------------------*/
 static sm_hal_can_msg_t g_can_msg_buff;
