@@ -195,7 +195,7 @@ extern "C" {
             (((RA_NOT_DEFINED > 0) ? 0U : 1U) << 0U) /* External IRQ0 */ | \
             (((RA_NOT_DEFINED > 0) ? 0U : 1U) << 1U) /* External IRQ1 */ | \
             (((RA_NOT_DEFINED > 0) ? 0U : 1U) << 2U) /* External IRQ2 */ | \
-            (((1 > 0) ? 0U : 1U) << 3U) /* External IRQ3 */ | \
+            (((RA_NOT_DEFINED > 0) ? 0U : 1U) << 3U) /* External IRQ3 */ | \
             (((RA_NOT_DEFINED > 0) ? 0U : 1U) << 4U) /* External IRQ4 */ | \
             (((RA_NOT_DEFINED > 0) ? 0U : 1U) << 5U) /* External IRQ5 */ | \
             (((RA_NOT_DEFINED > 0) ? 0U : 1U) << 6U) /* External IRQ6 */ | \
@@ -205,7 +205,7 @@ extern "C" {
             (((RA_NOT_DEFINED > 0) ? 0U : 1U) << 10U) /* External IRQ10 */ | \
             (((RA_NOT_DEFINED > 0) ? 0U : 1U) << 11U) /* External IRQ11 */ | \
             (((RA_NOT_DEFINED > 0) ? 0U : 1U) << 12U) /* External IRQ12 */ | \
-            (((RA_NOT_DEFINED > 0) ? 0U : 1U) << 13U) /* External IRQ13 */ | \
+            (((1 > 0) ? 0U : 1U) << 13U) /* External IRQ13 */ | \
             (((RA_NOT_DEFINED > 0) ? 0U : 1U) << 14U) /* External IRQ14 */ | \
             (((RA_NOT_DEFINED > 0) ? 0U : 1U) << 15U) /* External IRQ15 */ | \
             0xFFFF0000U)

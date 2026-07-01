@@ -35,6 +35,7 @@ sm_hal_flash_t *g_pmu_flash;
 
 sm_hal_uart_t *g_pmu_uart;
 
+sm_hal_exti_t *g_rx_exti;
 
 sm_hal_io_t* sm_bsp_pmu_get_node_id1(){
     return g_io_out_nodeid_1;
@@ -77,6 +78,7 @@ static void bsp_can_init();
 static inline void bsp_timer_init();
 static void bsp_flash_init();
 static void bsp_uart_init();
+static void bsp_exti_init();
 
 
 int32_t sm_bsp_pmu_init(void){
@@ -86,6 +88,7 @@ int32_t sm_bsp_pmu_init(void){
     bsp_timer_init();
     bsp_flash_init();
     bsp_uart_init();
+    bsp_exti_init();
     __enable_irq();
     return 0;
 }
@@ -237,6 +240,22 @@ void ISR_Flash(flash_callback_args_t *p_args){
 
     (void) p_args;
 }
+
+static void bsp_exti_init(){
+
+	g_rx_exti = sm_hal_exti_init(&g_external_irq0, one_write_rx);
+	sm_hal_exti_start(g_rx_exti);
+}
+
+void one_write_rx_cb(external_irq_callback_args_t *p_args){
+	(void) p_args;
+	sm_hal_exti_irq(g_rx_exti);
+}
+sm_hal_exti_t *bsp_get_exti_one_write_rx(){
+
+	return g_rx_exti;
+}
+
 int32_t sm_pmu_bsp_reboot(){
     __NVIC_SystemReset();
     return 0;

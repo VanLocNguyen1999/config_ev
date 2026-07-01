@@ -19,7 +19,7 @@
             [12] = sci_uart_eri_isr, /* SCI4 ERI (Receive error) */
             [13] = fcu_frdyi_isr, /* FCU FRDYI (Flash ready interrupt) */
             [14] = fcu_fiferr_isr, /* FCU FIFERR (Flash access error interrupt) */
-            [15] = r_icu_isr, /* ICU IRQ3 (External pin interrupt 3) */
+            [15] = r_icu_isr, /* ICU IRQ13 (External pin interrupt 13) */
         };
         #if BSP_FEATURE_ICU_HAS_IELSR
         const bsp_interrupt_event_t g_interrupt_event_link_select[BSP_ICU_VECTOR_MAX_ENTRIES] =
@@ -39,7 +39,7 @@
             [12] = BSP_PRV_VECT_ENUM(EVENT_SCI4_ERI,GROUP4), /* SCI4 ERI (Receive error) */
             [13] = BSP_PRV_VECT_ENUM(EVENT_FCU_FRDYI,GROUP5), /* FCU FRDYI (Flash ready interrupt) */
             [14] = BSP_PRV_VECT_ENUM(EVENT_FCU_FIFERR,GROUP6), /* FCU FIFERR (Flash access error interrupt) */
-            [15] = BSP_PRV_VECT_ENUM(EVENT_ICU_IRQ3,GROUP7), /* ICU IRQ3 (External pin interrupt 3) */
+            [15] = BSP_PRV_VECT_ENUM(EVENT_ICU_IRQ13,GROUP7), /* ICU IRQ13 (External pin interrupt 13) */
         };
         #endif
         #endif

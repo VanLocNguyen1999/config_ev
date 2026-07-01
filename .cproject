@@ -88,8 +88,8 @@
 									<listOptionValue builtIn="false" value="_RA_ORDINAL=1"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths.1636758810" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths" useByScannerDiscovery="true" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ev-sdk/common/one_wire}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ev-sdk/common/uart_module}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ev-sdk/common/one_write}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ev-sdk/services/ev_error_handle}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ev-sdk/apps/pmu/ev_io_handle}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ev-sdk/common/ev_data}&quot;"/>
@@ -243,9 +243,9 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="canopen|sm_ev_config_co.c|sm_pmu_co.c|sm_pmu_uart.c|sm_pmu_storage.c|sm_pmu_regis_handle.c|sm_pmu_ev_protect.c|sm_pmu_bpm_handle.c|sm_pmu_stm.c|ev_io_handle|unit_test/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/apps/pmu"/>
+						<entry excluding="ev_io_handle|sm_pmu_ev_protect.c|sm_pmu_co.c|sm_pmu_stm.c|sm_ev_config_co.c|sm_pmu_uart.c|sm_pmu_regis_handle.c|unit_test/|sm_pmu_bpm_handle.c|canopen|sm_pmu_storage.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/apps/pmu"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/bsp"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/common/one_write"/>
+						<entry excluding="abc" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/common/one_wire"/>
 						<entry excluding="sm_ev_opt_storage.c|sm_ev_odo_storage.c|sm_ev_manu_storage.c|sm_ev_sec_storage.c|ssl_file" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/common/storage"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/common/uart_module"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="ev-sdk/cores/inc"/>

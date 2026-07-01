@@ -13,21 +13,21 @@
 extern "C" {
 #endif
 
-void     sm_counter_init(void){
+static inline void sm_counter_init(void){
 
     CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
     DWT->CYCCNT = 0;
     DWT->CTRL  |= DWT_CTRL_CYCCNTENA_Msk;
 }
-uint32_t sm_counter_get(void){                   /* Lấy counter hiện tại      */
+static inline uint32_t sm_counter_get(void){                   /* Lấy counter hiện tại      */
 
 	return DWT->CYCCNT;
 }
-uint32_t sm_counter_elapsed_us(uint32_t start) {  /* Thời gian từ start đến nay (µs) */
+static inline uint32_t sm_counter_elapsed_us(uint32_t start) {  /* Thời gian từ start đến nay (µs) */
 
 	return (DWT->CYCCNT - start) / (SystemCoreClock / 1000000UL);
 }
-uint32_t sm_counter_elapsed_ms(uint32_t start){   /* Thời gian từ start đến nay (ms) */
+static inline uint32_t sm_counter_elapsed_ms(uint32_t start){   /* Thời gian từ start đến nay (ms) */
 
 	return (DWT->CYCCNT - start) / (SystemCoreClock / 1000UL);
 }

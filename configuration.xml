@@ -528,10 +528,10 @@
     </module>
     <module id="module.driver.external_irq_on_icu.194549295">
       <property id="module.driver.external_irq.name" value="g_external_irq0"/>
-      <property id="module.driver.external_irq.channel" value="3"/>
+      <property id="module.driver.external_irq.channel" value="13"/>
       <property id="module.driver.external_irq.trigger" value="module.driver.external_irq.trigger.trig_both_edge"/>
       <property id="module.driver.external_irq.filter_enable" value="module.driver.external_irq.filter_enable.true"/>
-      <property id="module.driver.external_irq.clock_source_div" value="module.driver.external_irq.clock_source_div.clock_source_div_by_32"/>
+      <property id="module.driver.external_irq.clock_source_div" value="module.driver.external_irq.clock_source_div.clock_source_div_by_8"/>
       <property id="module.driver.external_irq.p_callback" value="one_write_rx_cb"/>
       <property id="module.driver.external_irq.ipl" value="board.icu.common.irq.priority2"/>
     </module>
@@ -583,11 +583,11 @@
   </raModuleConfiguration>
   <raPinConfiguration>
     <symbolicName propertyId="p000.symbolic_name" value="LED1"/>
+    <symbolicName propertyId="p015.symbolic_name" value="one_write_rx"/>
     <symbolicName propertyId="p100.symbolic_name" value="OUT_12V_ENABLE"/>
     <symbolicName propertyId="p101.symbolic_name" value="IN_12V_DETECTOR"/>
     <symbolicName propertyId="p104.symbolic_name" value="NodeID1"/>
     <symbolicName propertyId="p109.symbolic_name" value="one_write_tx"/>
-    <symbolicName propertyId="p110.symbolic_name" value="one_write_rx"/>
     <symbolicName propertyId="p111.symbolic_name" value="NodeID3"/>
     <symbolicName propertyId="p112.symbolic_name" value="NodeID2"/>
     <symbolicName propertyId="p201.symbolic_name" value="CAN_MODE"/>
@@ -600,10 +600,13 @@
       <configSetting altId="debug0.mode.swd" configurationId="debug0.mode"/>
       <configSetting altId="debug0.swclk.p300" configurationId="debug0.swclk"/>
       <configSetting altId="debug0.swdio.p108" configurationId="debug0.swdio"/>
-      <configSetting altId="irq0.irq03.p110" configurationId="irq0.irq03"/>
+      <configSetting altId="irq0.irq13.p015" configurationId="irq0.irq13"/>
       <configSetting altId="irq0.mode.enabled" configurationId="irq0.mode"/>
       <configSetting altId="p000.output.low" configurationId="p000"/>
       <configSetting altId="p000.gpio_mode.gpio_mode_out.low" configurationId="p000.gpio_mode"/>
+      <configSetting altId="p015.irq0.irq13" configurationId="p015"/>
+      <configSetting altId="p015.gpio_irq.gpio_irq_enabled" configurationId="p015.gpio_irq"/>
+      <configSetting altId="p015.gpio_mode.gpio_mode_irq" configurationId="p015.gpio_mode"/>
       <configSetting altId="p100.output.low" configurationId="p100"/>
       <configSetting altId="p100.gpio_mode.gpio_mode_out.low" configurationId="p100.gpio_mode"/>
       <configSetting altId="p101.input" configurationId="p101"/>
@@ -619,9 +622,6 @@
       <configSetting altId="p108.gpio_mode.gpio_mode_peripheral" configurationId="p108.gpio_mode"/>
       <configSetting altId="p109.output.low" configurationId="p109"/>
       <configSetting altId="p109.gpio_mode.gpio_mode_out.low" configurationId="p109.gpio_mode"/>
-      <configSetting altId="p110.irq0.irq03" configurationId="p110"/>
-      <configSetting altId="p110.gpio_irq.gpio_irq_enabled" configurationId="p110.gpio_irq"/>
-      <configSetting altId="p110.gpio_mode.gpio_mode_irq" configurationId="p110.gpio_mode"/>
       <configSetting altId="p111.output.low" configurationId="p111"/>
       <configSetting altId="p111.gpio_mode.gpio_mode_out.low" configurationId="p111.gpio_mode"/>
       <configSetting altId="p112.output.low" configurationId="p112"/>

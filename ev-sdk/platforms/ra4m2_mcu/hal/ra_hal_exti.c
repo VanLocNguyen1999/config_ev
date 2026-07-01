@@ -4,6 +4,7 @@
  *  Created on: 29 Jun 2026
  *      Author: My PC
  */
+#include "stdlib.h"
 #include "common_data.h"
 #include "sm_hal_exti.h"
 
@@ -37,6 +38,7 @@ int32_t sm_hal_exti_start(sm_hal_exti_t *_this){
 
 	if(!_this) return -1;
 	fsp_err_t err = FSP_SUCCESS;
+	R_IOPORT_Open(&g_ioport_ctrl, &g_bsp_pin_cfg);
 	err = R_ICU_ExternalIrqOpen(_impl(_this)->m_instance->p_ctrl, _impl(_this)->m_instance->p_cfg);
 	if(err != FSP_SUCCESS) return -1;
     // Bật ngắt

@@ -34,6 +34,8 @@ extern  "C"{
 #include "sm_hal_iwdg.h"
 
 #include "sm_hal_rtc.h"
+
+#include "sm_hal_exti.h"
 #ifdef __cplusplus
 };
 #endif

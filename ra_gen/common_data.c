@@ -1,9 +1,9 @@
 /* generated common source file - do not edit */
 #include "common_data.h"
 icu_instance_ctrl_t g_external_irq0_ctrl;
-const external_irq_cfg_t g_external_irq0_cfg = { .channel = 3, .trigger =
+const external_irq_cfg_t g_external_irq0_cfg = { .channel = 13, .trigger =
 		EXTERNAL_IRQ_TRIG_BOTH_EDGE, .filter_enable = true, .clock_source_div =
-		EXTERNAL_IRQ_CLOCK_SOURCE_DIV_32, .p_callback = one_write_rx_cb,
+		EXTERNAL_IRQ_CLOCK_SOURCE_DIV_8, .p_callback = one_write_rx_cb,
 /** If NULL then do not add & */
 #if defined(NULL)
     .p_context           = NULL,
@@ -11,8 +11,8 @@ const external_irq_cfg_t g_external_irq0_cfg = { .channel = 3, .trigger =
 		.p_context = &NULL,
 #endif
 		.p_extend = NULL, .ipl = (2),
-#if defined(VECTOR_NUMBER_ICU_IRQ3)
-    .irq                 = VECTOR_NUMBER_ICU_IRQ3,
+#if defined(VECTOR_NUMBER_ICU_IRQ13)
+    .irq                 = VECTOR_NUMBER_ICU_IRQ13,
 #else
 		.irq = FSP_INVALID_VECTOR,
 #endif
