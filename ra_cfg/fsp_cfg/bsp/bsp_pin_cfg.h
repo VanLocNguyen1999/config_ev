@@ -7,11 +7,11 @@
 FSP_HEADER
 
 #define LED1 (BSP_IO_PORT_00_PIN_00)
-#define one_write_rx (BSP_IO_PORT_00_PIN_15)
 #define OUT_12V_ENABLE (BSP_IO_PORT_01_PIN_00)
 #define IN_12V_DETECTOR (BSP_IO_PORT_01_PIN_01)
 #define NodeID1 (BSP_IO_PORT_01_PIN_04)
 #define one_write_tx (BSP_IO_PORT_01_PIN_09)
+#define one_write_rx (BSP_IO_PORT_01_PIN_10)
 #define NodeID3 (BSP_IO_PORT_01_PIN_11)
 #define NodeID2 (BSP_IO_PORT_01_PIN_12)
 #define CAN_MODE (BSP_IO_PORT_02_PIN_01)

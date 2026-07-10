@@ -53,8 +53,8 @@ void r_icu_isr(void);
 #define FCU_FRDYI_IRQn          ((IRQn_Type) 13) /* FCU FRDYI (Flash ready interrupt) */
 #define VECTOR_NUMBER_FCU_FIFERR ((IRQn_Type) 14) /* FCU FIFERR (Flash access error interrupt) */
 #define FCU_FIFERR_IRQn          ((IRQn_Type) 14) /* FCU FIFERR (Flash access error interrupt) */
-#define VECTOR_NUMBER_ICU_IRQ13 ((IRQn_Type) 15) /* ICU IRQ13 (External pin interrupt 13) */
-#define ICU_IRQ13_IRQn          ((IRQn_Type) 15) /* ICU IRQ13 (External pin interrupt 13) */
+#define VECTOR_NUMBER_ICU_IRQ3 ((IRQn_Type) 15) /* ICU IRQ3 (External pin interrupt 3) */
+#define ICU_IRQ3_IRQn          ((IRQn_Type) 15) /* ICU IRQ3 (External pin interrupt 3) */
 #ifdef __cplusplus
         }
         #endif

@@ -54,7 +54,7 @@
       <configSetting altId="can0.ctx.p103" configurationId="can0.ctx" isUsedByDriver="true" peripheral="CAN0"/>
       <configSetting altId="debug0.swclk.p300" configurationId="debug0.swclk" isUsedByDriver="true" peripheral="DEBUG0"/>
       <configSetting altId="debug0.swdio.p108" configurationId="debug0.swdio" isUsedByDriver="true" peripheral="DEBUG0"/>
-      <configSetting altId="irq0.irq13.p015" configurationId="irq0.irq13" isUsedByDriver="true" peripheral="ICU0"/>
+      <configSetting altId="irq0.irq03.p110" configurationId="irq0.irq03" isUsedByDriver="true" peripheral="ICU0"/>
       <configSetting altId="p000.output.low" configurationId="p000"/>
       <configSetting altId="p100.output.low" configurationId="p100"/>
       <configSetting altId="p101.input" configurationId="p101"/>

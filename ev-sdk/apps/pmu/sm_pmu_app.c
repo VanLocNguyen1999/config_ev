@@ -31,29 +31,29 @@
 #define TX_OW_MSG_ID       0x3A
 #define TX_OW_VERSION      0x11
 /**************************************************************/
-//#define RX_TIME_SYNC_MAX		68200
-//#define RX_TIME_SYNC_MIN		55800
+#define RX_TIME_SYNC_MAX		68200
+#define RX_TIME_SYNC_MIN		55800
+
+#define RX_TIME_BIT0_MAX		4400
+#define RX_TIME_BIT0_MIN		3600
+
+#define RX_TIME_BIT1_MAX		2200
+#define RX_TIME_BIT1_MIN		1800
+
+#define RX_TIME_STOP_MAX		22000
+#define RX_TIME_STOP_MIN		18000
+
+//#define RX_TIME_SYNC_MAX		11000
+//#define RX_TIME_SYNC_MIN		9000
 //
-//#define RX_TIME_BIT1_MAX		4400
-//#define RX_TIME_BIT1_MIN		3600
+//#define RX_TIME_BIT1_MAX		550
+//#define RX_TIME_BIT1_MIN		450
 //
-//#define RX_TIME_BIT0_MAX		2200
-//#define RX_TIME_BIT0_MIN		1800
+//#define RX_TIME_BIT0_MAX		1650
+//#define RX_TIME_BIT0_MIN		1350
 //
-//#define RX_TIME_STOP_MAX		22000
-//#define RX_TIME_STOP_MIN		18000
-
-#define RX_TIME_SYNC_MAX		11000
-#define RX_TIME_SYNC_MIN		9000
-
-#define RX_TIME_BIT1_MAX		550
-#define RX_TIME_BIT1_MIN		450
-
-#define RX_TIME_BIT0_MAX		1650
-#define RX_TIME_BIT0_MIN		1350
-
-#define RX_TIME_STOP_MAX		5500
-#define RX_TIME_STOP_MIN		4500
+//#define RX_TIME_STOP_MAX		5500
+//#define RX_TIME_STOP_MIN		4500
 
 sm_pmu_app_t* g_pmu_app = NULL;
 
@@ -86,15 +86,25 @@ static OneWire_Para_t one_wire_para = {
 		.m_time_stop_max = RX_TIME_STOP_MAX
 };
 
+static uint8_t sm_bat_check_sum(const uint8_t *buf, uint8_t len){
+
+	uint16_t s = 0;
+	for (uint8_t i = 0; i < len; i++) {
+		s += buf[i];
+	}
+	return (uint8_t) (s);
+}
+
 static void sm_one_write_rx_complete(const OneWireRx_Frame_t * _frame, void* arg){
 
 	sm_pmu_app_t* app = (sm_pmu_app_t*)arg;
 	if(!_frame || !app) return;
 	memcpy(&app->m_rx_frame, _frame, sizeof(OneWireRx_Frame_t));
-	uint8_t cs =  _check_sum(_frame->data, _frame->byte_count - 1);
-	if(cs == _frame->data[_frame->byte_count - 1]){
+	uint8_t cs =  sm_bat_check_sum(_frame->data, _frame->byte_count - 2);
+	if(!cs) return;
+ 	if(cs == _frame->data[_frame->byte_count - 2]){
 
-		memcpy(&app->m_data,&_frame->data[3],_frame->data[2]);
+		memcpy(&app->m_bp_data,&_frame->data,sizeof(sm_bp_data_t));
 	}
 }
 static OneWireRx_callback_t one_write_cb = {
@@ -120,22 +130,15 @@ void sm_one_write_init(){
 	sm_one_wire_t* one_wire = sm_one_wire_create(tx_if,&one_wire_para,one_write_cb,pmu_app);
 	if(!one_wire) return;
 	pmu_app->m_one_write = one_wire;
-    sm_hal_exti_set_callback(rx_if, sm_exti_rx_cb, pmu_app);
+//	memset(&pmu_app->m_bp_data,0,sizeof(sm_bp_data_t));
+	sm_hal_exti_set_callback(rx_if, sm_exti_rx_cb, pmu_app);
     elapsed_timer_resetz(&pmu_app->m_timeout, 5000);
 	g_pmu_app = &g_pmu_app_default;
 }
-uint32_t data = 30;
+uint32_t data = 0;
 int32_t sm_pmu_app_process(void){
 
 	sm_pmu_app_t* pmu_app = &g_pmu_app_default;
-	if(!elapsed_timer_get_remain(&pmu_app->m_timeout)){
-
-		data = data + 10;
-		if(data > 200) {
-
-			data = 30;
-		}
-		elapsed_timer_reset(&pmu_app->m_timeout);
-	}
-	return OneWireTx_send(pmu_app->m_one_write,(uint8_t *)&data,1);
+	data = (uint8_t)(pmu_app->m_bp_data.m_soc * 2);
+	return OneWireTx_send(pmu_app->m_one_write,(uint8_t*)&data,1);
 }

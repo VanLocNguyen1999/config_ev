@@ -113,17 +113,18 @@ static void tx_stop(OneWire_t *_this){
     DELAY_US(_this->m_para.m_time_stop_high);
 }
 /* ===================== Private rx functions ===================== */
-static void rx_push_bit(OneWireRx_Frame_t *frame, uint8_t bit){
-
+static void rx_push_bit(OneWireRx_Frame_t *frame, uint8_t bit)
+{
     if (frame->bit_count >= OW_MAX_BITS)
-    	return;
+        return;
+
     uint8_t byte_idx = frame->bit_count / 8;
-    uint8_t bit_idx  = frame->bit_count % 8; // LSB first
+    uint8_t bit_idx  = 7 - (frame->bit_count % 8);   // MSB first
 
     if (bit)
-        frame->data[byte_idx] |= (uint8_t)(1 << bit_idx);
+        frame->data[byte_idx] |= (uint8_t)(1U << bit_idx);
     else
-        frame->data[byte_idx] &= (uint8_t)~(1 << bit_idx);
+        frame->data[byte_idx] &= (uint8_t)~(1U << bit_idx);
 
     frame->bit_count++;
     frame->byte_count = (uint8_t)((frame->bit_count + 7) / 8);
