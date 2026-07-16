@@ -8,7 +8,7 @@
 #ifndef ONE_WIRE_DEFINE_H_
 #define ONE_WIRE_DEFINE_H_
 #include "sm_types.h"
-#define OW_MAX_BITS        64
+#define OW_MAX_BITS        256
 #define OW_MAX_BYTES       (OW_MAX_BITS / 8)
 typedef struct {
 

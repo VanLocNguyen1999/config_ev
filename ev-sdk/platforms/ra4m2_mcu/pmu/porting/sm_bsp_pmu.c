@@ -127,7 +127,7 @@ static void bsp_flash_init(){
 
 static void bsp_uart_init(){
 
-    g_pmu_uart = sm_hal_uart_init(&g_io_uart, 115200, 1, 8);
+    g_pmu_uart = sm_hal_uart_init(&g_io_uart, 9600, 1, 8);
     sm_hal_uart_open(g_pmu_uart);
 }
 

@@ -22,12 +22,32 @@ typedef struct {
 	uint8_t m_none2;
 	uint8_t m_cs;
 }sm_bp_data_t;
+typedef struct {
+	uint8_t m_flag;
+	uint8_t m_motor_vol;
+	uint8_t m_ev_purpose;
+	uint8_t m_motor_pole_pairs;
+	uint16_t m_motor_power;
+	uint16_t m_motor_speed;
+	float m_wheel_radius;
+	uint8_t m_set_max_speed;
+}sm_icm_init_data_t;
 
 typedef struct {
+	uint8_t m_set_reverse_mode;
+	uint8_t m_set_forward_mode;
+	uint8_t m_set_side_stand_mode;
+	uint8_t m_set_time_enter_parking;
+	uint8_t m_set_anti_thef;
+	uint8_t m_side_stand_single;
+	uint8_t m_set_break_mode;
+	uint8_t m_set_max_speed;
+}sm_icm_cycle_data_t;
+typedef struct {
 	sm_one_wire_t* m_one_write;
-
-	OneWireRx_Frame_t m_rx_frame;
-	sm_bp_data_t m_bp_data;
+	sm_icm_init_data_t m_icm_init;
+	sm_icm_cycle_data_t m_icm_cycle;
+	uint32_t m_icm_init_counter;
 	elapsed_timer_t m_timeout;
 }sm_pmu_app_t;
 

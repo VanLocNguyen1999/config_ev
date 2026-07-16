@@ -101,8 +101,10 @@ static void tx_set_bit(OneWire_t *_this, uint8_t b) {
 }
 
 static void tx_set_byte(OneWire_t *_this, uint8_t v) {
-	for (uint8_t i = 0; i < 8; i++)
-		tx_set_bit(_this, (v >> i) & 1); /* LSB first */
+//	for (uint8_t i = 0; i < 8; i++)
+//		tx_set_bit(_this, (v >> i) & 1); /* LSB first */
+	for (int8_t i = 7; i >= 0; i--) /* MSB first */
+	    tx_set_bit(_this, (v >> i) & 0x01);
 }
 
 static void tx_stop(OneWire_t *_this){
@@ -214,13 +216,10 @@ OWStatus OneWireTx_send(sm_one_wire_t *_this, const uint8_t *data, uint8_t len) 
 	if (!data || len == 0 || len > OW_MAX_BYTES)
 		return OW_ERR_LEN;
 	/* Build frame */
-	uint8_t buf[OW_MAX_BYTES + 4];
+	uint8_t buf[OW_MAX_BYTES + 4] = {0};
 	uint8_t index = 0;
-
-	buf[index++] = _impl(_this)->m_para.m_id;
-	buf[index++] = _impl(_this)->m_para.m_version;
-	buf[index++] = len;
-	for (uint8_t i = 0; i < len; i++) {
+//	buf[index++] = len;
+	for (uint8_t i = 0; i < len - 1; i++) {
 		buf[index++] = data[i];
 	}
 
@@ -232,13 +231,12 @@ OWStatus OneWireTx_send(sm_one_wire_t *_this, const uint8_t *data, uint8_t len) 
 		tx_set_byte(_this, buf[i]);
 	}
 
-	tx_stop(_this);
+//	tx_stop(_this);
 	_impl(_this)->m_tx.tx_count ++;
 	return OW_OK;
 }
 
-OWStatus OneWireTx_send_impl(sm_one_wire_t *_this, uint8_t _id, uint8_t _ver,
-		const uint8_t *data, uint8_t len) {
+OWStatus OneWireTx_send_impl(sm_one_wire_t *_this, uint8_t _id,const uint8_t *data, uint8_t len) {
 
 	if (!_this)
 		return OW_ERR_NOT_INIT;
@@ -249,7 +247,6 @@ OWStatus OneWireTx_send_impl(sm_one_wire_t *_this, uint8_t _id, uint8_t _ver,
 	uint8_t index = 0;
 
 	buf[index++] = _id;
-	buf[index++] = _ver;
 	buf[index++] = len;
 	for (uint8_t i = 0; i < len; i++) {
 		buf[index++] = data[i];

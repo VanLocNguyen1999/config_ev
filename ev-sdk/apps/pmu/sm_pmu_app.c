@@ -4,7 +4,7 @@
 
 #include "sm_pmu_app.h"
 #include "hal_data.h"
-
+#include "sm_utils.h"
 #define TAG "SM_PMU_APP"
 
 #define _impl(x) ((sm_pmu_app_t*)x)
@@ -16,13 +16,13 @@
 
 #define	TIME_5_MIU		3*60*1000
 
-#define TX_TIME_SYNC_LOW		10000   /* LOW  10000us  */
+#define TX_TIME_SYNC_LOW		48000   /* LOW  10000us  */
 #define TX_TIME_SYNC_HIGH		1000   /* HIGH  1000us  */
 
 #define TX_TIME_BIT1_LOW		500   /* LOW  500us */
-#define TX_TIME_BIT1_HIGH		1500   /* HIGH 1500us */
+#define TX_TIME_BIT1_HIGH		1000   /* HIGH 1500us */
 
-#define TX_TIME_BIT0_LOW		1500   /* LOW  1500us */
+#define TX_TIME_BIT0_LOW		1000   /* LOW  1500us */
 #define TX_TIME_BIT0_HIGH		500   /* HIGH 500us */
 
 #define TX_TIME_STOP_LOW		5000   /* LOW   5000us  */
@@ -86,26 +86,102 @@ static OneWire_Para_t one_wire_para = {
 		.m_time_stop_max = RX_TIME_STOP_MAX
 };
 
-static uint8_t sm_bat_check_sum(const uint8_t *buf, uint8_t len){
+static sm_icm_init_data_t g_icm_init = {
+		.m_flag = 1,
+		.m_motor_pole_pairs = 30,
+		.m_motor_power = 2000,
+		.m_motor_speed = 800,
+		.m_motor_vol = 60,
+		.m_set_max_speed = 70,
+		.m_wheel_radius = 0.2618f, //0.2618
+		.m_ev_purpose = 1
+};
+static sm_icm_cycle_data_t g_icm_cycle = {
 
-	uint16_t s = 0;
-	for (uint8_t i = 0; i < len; i++) {
-		s += buf[i];
+		.m_set_anti_thef = 0,
+		.m_set_break_mode = 0,
+		.m_set_forward_mode = 0,
+		.m_set_max_speed = 70,
+		.m_set_reverse_mode = 0,
+		.m_set_side_stand_mode = 0,
+		.m_set_time_enter_parking = 5,
+		.m_side_stand_single = 0
+};
+static void sm_icm_init_data_build(uint8_t *_buffer){
+
+	_buffer[0] = 35;//0x23;
+	_buffer[1] = 14;
+
+	uint16_t tmp = 0;
+	if (g_icm_init.m_motor_vol >= 24U) {
+		tmp = (uint16_t)((g_icm_init.m_motor_vol - 24U) / 12U);
 	}
-	return (uint8_t) (s);
+	uint8_t vol_data = (uint8_t) tmp;
+
+	uint8_t byte2 = 0;
+	byte2 |= (g_icm_init.m_flag & 0x01U) << 7;
+	byte2 |= (vol_data & 0x07U) << 4;             // 3 bit -> bit 6..4
+	byte2 |= (g_icm_init.m_ev_purpose & 0x03U) << 2; // 2 bit -> bit 3..2
+	_buffer[2] = byte2;
+
+	_buffer[3] = (uint8_t)	g_icm_init.m_motor_pole_pairs;
+	_buffer[4] = (uint8_t)	(g_icm_init.m_motor_power*0.01);
+
+	_buffer[5] = (uint8_t) ((g_icm_init.m_motor_speed >> 8) & 0xFF);
+	_buffer[6] = (uint8_t) (g_icm_init.m_motor_speed & 0xFF);
+
+	uint16_t wheel_radius = (uint16_t) (g_icm_init.m_wheel_radius*1000);
+	_buffer[7] = (uint8_t) ((wheel_radius >> 8) & 0xFF);
+	_buffer[8] = (uint8_t) (wheel_radius & 0xFF);
+
+	_buffer[9] = (uint8_t) (g_icm_init.m_set_max_speed);
+
+	_buffer[10] = 0;
+	_buffer[11] = 0;
+	_buffer[12] = 0;
 }
 
+static void sm_icm_cycle_data_build(uint8_t *_buffer){
+
+	sm_pmu_app_t* app = &g_pmu_app_default;
+	_buffer[0] = 36;//0x23;
+	_buffer[1] = 14;
+
+	uint8_t byte2 = 0;
+	byte2 |= (app->m_icm_cycle.m_set_reverse_mode & 0x03U) << 4;
+	byte2 |= (app->m_icm_cycle.m_set_forward_mode & 0x03U) << 6;
+	_buffer[2] = byte2;
+
+	uint8_t byte3 = 0;
+	byte3 |= (app->m_icm_cycle.m_set_side_stand_mode & 0x03U) << 2;
+	_buffer[3] = byte3;
+
+	_buffer[4] = 0;
+
+	uint8_t byte5 = 0;
+	byte5 |= (app->m_icm_cycle.m_set_anti_thef & 0x03U) << 2;
+	_buffer[5] = byte5;
+
+	uint8_t byte6 = 0;
+	byte6 |= (app->m_icm_cycle.m_side_stand_single & 0x03U) << 3;
+	_buffer[6] = byte6;
+
+	_buffer[7] = 0;
+
+	uint8_t byte8 = 0;
+	byte8 |= (app->m_icm_cycle.m_set_break_mode & 0x03U) << 5;
+	_buffer[8] = byte8;
+
+	_buffer[9] = 0;
+	_buffer[10] = 0;
+
+	_buffer[11] = app->m_icm_cycle.m_set_max_speed;
+	_buffer[12] = 0;
+}
 static void sm_one_write_rx_complete(const OneWireRx_Frame_t * _frame, void* arg){
 
-	sm_pmu_app_t* app = (sm_pmu_app_t*)arg;
-	if(!_frame || !app) return;
-	memcpy(&app->m_rx_frame, _frame, sizeof(OneWireRx_Frame_t));
-	uint8_t cs =  sm_bat_check_sum(_frame->data, _frame->byte_count - 2);
-	if(!cs) return;
- 	if(cs == _frame->data[_frame->byte_count - 2]){
-
-		memcpy(&app->m_bp_data,&_frame->data,sizeof(sm_bp_data_t));
-	}
+	(void)_frame;
+	(void)arg;
 }
 static OneWireRx_callback_t one_write_cb = {
 		.on_frame_complete = sm_one_write_rx_complete,
@@ -130,15 +206,23 @@ void sm_one_write_init(){
 	sm_one_wire_t* one_wire = sm_one_wire_create(tx_if,&one_wire_para,one_write_cb,pmu_app);
 	if(!one_wire) return;
 	pmu_app->m_one_write = one_wire;
-//	memset(&pmu_app->m_bp_data,0,sizeof(sm_bp_data_t));
+	pmu_app->m_icm_init_counter = 0;
 	sm_hal_exti_set_callback(rx_if, sm_exti_rx_cb, pmu_app);
     elapsed_timer_resetz(&pmu_app->m_timeout, 5000);
+    memcpy(&pmu_app->m_icm_cycle, &g_icm_cycle,sizeof(sm_icm_cycle_data_t));
 	g_pmu_app = &g_pmu_app_default;
 }
-uint32_t data = 0;
+
 int32_t sm_pmu_app_process(void){
 
 	sm_pmu_app_t* pmu_app = &g_pmu_app_default;
-	data = (uint8_t)(pmu_app->m_bp_data.m_soc * 2);
-	return OneWireTx_send(pmu_app->m_one_write,(uint8_t*)&data,1);
+	uint8_t init_data[14] = {0};
+	if(pmu_app->m_icm_init_counter < 5){
+		sm_icm_init_data_build(init_data);
+		pmu_app->m_icm_init_counter ++;
+	}else {
+		sm_icm_cycle_data_build(init_data);
+	}
+	OneWireTx_send(pmu_app->m_one_write, init_data, 14);
+	return 0;
 }

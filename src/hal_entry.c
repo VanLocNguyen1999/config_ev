@@ -17,7 +17,7 @@ int64_t get_tick_count(){
 void SysTick_Handler(void){
     sys_tick++;
 }
-
+sm_hal_io_t* g_wire_tx = NULL;
 void hal_entry(void){
 
 	__disable_irq();
@@ -27,10 +27,14 @@ void hal_entry(void){
     sm_bsp_pmu_init();
     sm_counter_init();
     sm_one_write_init();
+    g_wire_tx =  sm_bsp_get_one_write_tx();
 	__enable_irq();
     while(1){
     	sm_pmu_app_process();
-    	R_BSP_SoftwareDelay(500, BSP_DELAY_UNITS_MILLISECONDS);
+//    	sm_hal_io_set_value(g_wire_tx, 0);
+//    	R_BSP_SoftwareDelay(500, BSP_DELAY_UNITS_MICROSECONDS);
+//    	sm_hal_io_set_value(g_wire_tx, 1);
+    	R_BSP_SoftwareDelay(50, BSP_DELAY_UNITS_MILLISECONDS);
     }
 }
 

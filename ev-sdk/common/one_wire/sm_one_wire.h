@@ -24,6 +24,6 @@ uint32_t OneWireRx_GetFrameCount(const sm_one_wire_t *_this);
 uint32_t OneWireRx_GetErrorCount(const sm_one_wire_t *_this);
 
 OWStatus OneWireTx_send(sm_one_wire_t *_this, const uint8_t *data, uint8_t len);
-OWStatus OneWireTx_send_impl(sm_one_wire_t *_this, uint8_t _id, uint8_t _ver,
+OWStatus OneWireTx_send_impl(sm_one_wire_t *_this, uint8_t _id,
 		const uint8_t *data, uint8_t len);
 #endif /* SM_ONE_WIRE_H_ */
