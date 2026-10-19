@@ -17,6 +17,8 @@ sm_hal_io_t *g_io_out_nodeid_1;
 sm_hal_io_t *g_io_out_nodeid_2;
 sm_hal_io_t *g_io_out_nodeid_3;
 
+sm_hal_io_t *g_io_out_can_ctrl;
+
 sm_hal_io_t *g_one_write_tx;
 sm_hal_io_t *g_one_write_rx;
 sm_hal_io_t *g_led_2;
@@ -72,6 +74,18 @@ sm_hal_timer_t* sm_bsp_pmu_get_timer(int32_t _timer){
             return NULL;
     }
 }
+int32_t sm_bsp_pmu_io_set_node_id1(uint8_t _value){
+
+	return sm_hal_io_set_value(g_io_out_nodeid_1, _value);
+}
+int32_t sm_bsp_pmu_io_set_node_id2(uint8_t _value){
+
+	return sm_hal_io_set_value(g_io_out_nodeid_2, _value);
+}
+int32_t sm_bsp_pmu_io_set_node_id3(uint8_t _value){
+
+	return sm_hal_io_set_value(g_io_out_nodeid_3, _value);
+}
 
 static void bsp_io_init();
 static void bsp_can_init();
@@ -94,12 +108,29 @@ int32_t sm_bsp_pmu_init(void){
 }
 static void bsp_io_init(){
 
-    g_one_write_tx   = sm_hal_io_init(one_write_tx);
-    sm_hal_io_open(g_one_write_tx, SM_HAL_IO_OUTPUT);
-    sm_hal_io_set_value(g_one_write_tx, 0);
+//    g_one_write_tx   = sm_hal_io_init(one_write_tx);
+//    sm_hal_io_open(g_one_write_tx, SM_HAL_IO_OUTPUT);
+//    sm_hal_io_set_value(g_one_write_tx, 0);
 
     g_one_write_rx = sm_hal_io_init(one_write_rx);
 	sm_hal_io_open(g_one_write_rx, SM_HAL_IO_INPUT);
+
+	g_io_out_nodeid_1 = sm_hal_io_init(ID1);
+    sm_hal_io_open(g_io_out_nodeid_1, SM_HAL_IO_OUTPUT);
+    sm_hal_io_set_value(g_io_out_nodeid_1, 1);
+
+	g_io_out_nodeid_2 = sm_hal_io_init(ID2);
+    sm_hal_io_open(g_io_out_nodeid_2, SM_HAL_IO_OUTPUT);
+    sm_hal_io_set_value(g_io_out_nodeid_2, 1);
+
+	g_io_out_nodeid_3 = sm_hal_io_init(ID3);
+    sm_hal_io_open(g_io_out_nodeid_3, SM_HAL_IO_OUTPUT);
+    sm_hal_io_set_value(g_io_out_nodeid_3, 1);
+
+
+    g_io_out_can_ctrl = sm_hal_io_init(CAN_TRL);
+    sm_hal_io_open(g_io_out_can_ctrl, SM_HAL_IO_OUTPUT);
+    sm_hal_io_set_value(g_io_out_can_ctrl, 1);
 
 }
 

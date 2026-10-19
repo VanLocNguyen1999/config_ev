@@ -582,16 +582,17 @@
     </config>
   </raModuleConfiguration>
   <raPinConfiguration>
-    <symbolicName propertyId="p000.symbolic_name" value="LED1"/>
+    <symbolicName propertyId="p000.symbolic_name" value="ID1"/>
+    <symbolicName propertyId="p001.symbolic_name" value="ID2"/>
     <symbolicName propertyId="p100.symbolic_name" value="OUT_12V_ENABLE"/>
     <symbolicName propertyId="p101.symbolic_name" value="IN_12V_DETECTOR"/>
     <symbolicName propertyId="p104.symbolic_name" value="NodeID1"/>
-    <symbolicName propertyId="p109.symbolic_name" value="one_write_tx"/>
+    <symbolicName propertyId="p109.symbolic_name" value="CAN_TRL"/>
     <symbolicName propertyId="p110.symbolic_name" value="one_write_rx"/>
     <symbolicName propertyId="p111.symbolic_name" value="NodeID3"/>
     <symbolicName propertyId="p112.symbolic_name" value="NodeID2"/>
     <symbolicName propertyId="p201.symbolic_name" value="CAN_MODE"/>
-    <symbolicName propertyId="p402.symbolic_name" value="LED3"/>
+    <symbolicName propertyId="p402.symbolic_name" value="ID3"/>
     <pincfg active="true" name="R7FA4M2AB3CFL.pincfg" selected="true" symbol="g_bsp_pin_cfg">
       <configSetting altId="adc0.mode.custom" configurationId="adc0.mode"/>
       <configSetting altId="can0.crx.p102" configurationId="can0.crx"/>
@@ -604,6 +605,8 @@
       <configSetting altId="irq0.mode.enabled" configurationId="irq0.mode"/>
       <configSetting altId="p000.output.low" configurationId="p000"/>
       <configSetting altId="p000.gpio_mode.gpio_mode_out.low" configurationId="p000.gpio_mode"/>
+      <configSetting altId="p001.output.low" configurationId="p001"/>
+      <configSetting altId="p001.gpio_mode.gpio_mode_out.low" configurationId="p001.gpio_mode"/>
       <configSetting altId="p100.output.low" configurationId="p100"/>
       <configSetting altId="p100.gpio_mode.gpio_mode_out.low" configurationId="p100.gpio_mode"/>
       <configSetting altId="p101.input" configurationId="p101"/>
