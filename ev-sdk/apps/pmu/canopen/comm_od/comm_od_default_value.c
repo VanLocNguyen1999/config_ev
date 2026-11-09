@@ -17,7 +17,7 @@
 /* Synchronous schedule */
 #define DEFAULT__1005__SYNC_ENABLE						CO_SYNC_VALID		/*	Enable sync mode: Set CO_SYNC_VALID (0)
 																				Disable sync mode: set CO_SYNC_NOT_VALID (1) */
-#define DEFAULT__1005__SYNC_GEN							CO_SYNC_GEN		    /*	Producer sync: Set CO_SYNC_GEN            -> For PMU/BSS_MASTER
+#define DEFAULT__1005__SYNC_GEN							CO_SYNC_NOT_GEN		    /*	Producer sync: Set CO_SYNC_GEN            -> For PMU/BSS_MASTER
 																				Consumer sync: Set CO_SYNC_NOT_GEN        -> For MC/BP/... */
 #define DEFAULT__1006__COMM_CYCLE_PERIOD_MS				(10U)				/* Set according to synchronous scheduled */
 #define DEFAULT__1007__SYNC_WINDOW_LENGTH_MS			(5U)				/* Set according to synchronous scheduled */
@@ -74,7 +74,7 @@
 
 /* TPDO1 Communication Parameter*/
 #define DEFAULT__180000__TPDO1_ENABLE						CO_PDO_VALID	    //<< Set CO_PDO_VALID if used, otherwise, set CO_PDO_NOT_VALID
-#define DEFAULT__180001__TPDO1_TRANS_TYPE					(21)				//<< Set according to synchronous scheduled.
+#define DEFAULT__180001__TPDO1_TRANS_TYPE					(23)				//<< Set according to synchronous scheduled.
 																				//	 Detail: See CO_TPDO.h >> TPDO transmission Types
 #define DEFAULT__180002__TPDO1_MAX_INHIBIT_TIME_MS			(1000)				/*	(16 bit). Suggest default = 1000. Valid when setting TPDO in event mode*/
 #define DEFAULT__180003__TPDO1_EVENT_TIME_MS				(10000)				/*	(16 bit). Suggest default = 10000. Valid when setting TPDO in event mode*/
@@ -83,16 +83,16 @@
 																				//see TPDO.h/CO_TPDO_Build_Data_option_t
 /* TPDO2 Communication Parameter*/
 #define DEFAULT__180100__TPDO2_ENABLE						CO_PDO_VALID	//<< Set CO_PDO_VALID if used, otherwise, set CO_PDO_NOT_VALID
-#define DEFAULT__180101__TPDO2_TRANS_TYPE					(21)				//<< Set according to synchronous scheduled.
+#define DEFAULT__180101__TPDO2_TRANS_TYPE					(24)				//<< Set according to synchronous scheduled.
 																				//	 Detail: See CO__TPDO.h >> TPDO transmission Types
 #define DEFAULT__180102__TPDO2_MAX_INHIBIT_TIME_MS			(1000)				/*	(16 bit). Suggest default = 1000. Valid when setting TPDO in event mode*/
 #define DEFAULT__180103__TPDO2_EVENT_TIME_MS				(10000)				/*	(16 bit). Suggest default = 10000. Valid when setting TPDO in event mode*/
-#define DEFAULT__180105__TPDO2_SYNC_MASK_REGISTER			(0x0000FFF)		//<< Set according to synchronous scheduled, default: 0x00000000
+#define DEFAULT__180105__TPDO2_SYNC_MASK_REGISTER			(0x00000111)		//<< Set according to synchronous scheduled, default: 0x00000000
 #define DEFAULT__180106__TPDO2_BUILD_DATA_OPTION			(CO_TPDO_build_data_manually)					//<< Default: CO_TPDO_build_data_manually
 																				//see TPDO.h/CO_TPDO_Build_Data_option_t
 /* TPDO3 Communication Parameter*/
 #define DEFAULT__180200__TPDO3_ENABLE						CO_PDO_VALID	//<< Set CO_PDO_VALID if used, otherwise, set CO_PDO_NOT_VALID
-#define DEFAULT__180201__TPDO3_TRANS_TYPE					(22)				//<< Set according to synchronous scheduled.
+#define DEFAULT__180201__TPDO3_TRANS_TYPE					(25)				//<< Set according to synchronous scheduled.
 																				//	 Detail: See CO__TPDO.h >> TPDO transmission Types
 #define DEFAULT__180202__TPDO3_MAX_INHIBIT_TIME_MS			(1000)				/*	(16 bit). Suggest default = 1000. Valid when setting TPDO in event mode*/
 #define DEFAULT__180203__TPDO3_EVENT_TIME_MS				(10000)				/*	(16 bit). Suggest default = 10000. Valid when setting TPDO in event mode*/
@@ -102,7 +102,7 @@
 
 /* TPDO4 Communication Parameter*/
 #define DEFAULT__180300__TPDO4_ENABLE						CO_PDO_VALID	//<< Set CO_PDO_VALID if used, otherwise, set CO_PDO_NOT_VALID
-#define DEFAULT__180301__TPDO4_TRANS_TYPE					(22)				//<< Set according to synchronous scheduled.
+#define DEFAULT__180301__TPDO4_TRANS_TYPE					(0)				//<< Set according to synchronous scheduled.
 																				//	 Detail: See CO__TPDO.h >> TPDO transmission Types
 #define DEFAULT__180302__TPDO4_MAX_INHIBIT_TIME_MS			(1000)				/*	(16 bit). Suggest default = 1000. Valid when setting TPDO in event mode*/
 #define DEFAULT__180303__TPDO4_EVENT_TIME_MS				(10000)				/*	(16 bit). Suggest default = 10000. Valid when setting TPDO in event mode*/

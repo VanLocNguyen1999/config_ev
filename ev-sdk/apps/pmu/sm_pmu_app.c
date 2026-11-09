@@ -107,7 +107,6 @@ void sm_pmu_uart_process(void *_arg) {
 	}
 
 	  if(sm_pmu_uart_polling_msg(_impl(_arg)->m_pmu_uart, _arg) < 0){
-
 		  return;
 	  }
 	  sm_pmu_uart_cmd_msg(_impl(_arg)->m_pmu_uart, _arg);
@@ -253,10 +252,10 @@ static int32_t sm_pmu_co_create(sm_pmu_app_t* _this){
                                                     sm_bsp_pmu_get_can_port());
 
     /// Create CanOpen Core
-    _this->m_co = sm_co_create(1, true, _this->m_co_interface);
-    sm_co_set_self_version(_this->m_co, _this->m_sw_version);
+    _this->m_co = sm_co_create(2, true, _this->m_co_interface);
+//    sm_co_set_self_version(_this->m_co, _this->m_sw_version);
 
-    sm_pmu_co_sdo_setting();
+//    sm_pmu_co_sdo_setting();
 
     return 0;
 }

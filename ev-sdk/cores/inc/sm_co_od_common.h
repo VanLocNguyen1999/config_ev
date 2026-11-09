@@ -12,7 +12,7 @@ extern "C" {
 #define NODE_ID_DEFAULT                                     (0x08)
 #define BOOT_MASTER_NODE_ID                                 (0x03)
 
-#define PMU_NODE_ID_DEFAULT                                 (1)
+#define PMU_NODE_ID_DEFAULT                                 (2)
 #define MC_NODE_ID_DEFAULT                                  (2)
 #define HMI_NODE_ID_DEFAULT                                 (8)
 #define BP_NODE_ID_DEFAULT								    (4)

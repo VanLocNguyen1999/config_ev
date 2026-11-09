@@ -263,26 +263,6 @@ void timer4_ISR(timer_callback_args_t* p_args){
     sm_hal_timer_irq(g_pmu_timer4);
 }
 
-void uart_io_callback(uart_callback_args_t *p_args){
-
-    switch (p_args->event){
-        case UART_EVENT_RX_COMPLETE:    ///< Receive complete event
-            break;
-        case UART_EVENT_TX_COMPLETE:    ///< Transmit complete event
-            sm_hal_uart_tx_irq(g_pmu_uart, (uint8_t)p_args->data);
-            break;
-        case UART_EVENT_RX_CHAR:        ///< Character received
-            sm_hal_uart_rx_irq(g_pmu_uart, (uint8_t)p_args->data);
-            break;
-        case UART_EVENT_ERR_PARITY:     ///< Parity error event
-        case UART_EVENT_ERR_FRAMING:    ///< Mode fault error event
-        case UART_EVENT_ERR_OVERFLOW:   ///< FIFO Overflow error event
-        case UART_EVENT_BREAK_DETECT:   ///< Break detect error event
-        case UART_EVENT_TX_DATA_EMPTY:  ///< Last byte is transmitting, ready for more data
-            break;
-    }
-}
-
 void ISR_Flash(flash_callback_args_t *p_args){
 
     (void) p_args;

@@ -77,6 +77,9 @@ typedef struct {
 
     ev_error_t*	m_pmu_err;
 
+    uint32_t speed_rpm;
+    uint32_t hall_position_counter;
+
 }sm_pmu_app_t;
 
 sm_pmu_app_t* sm_pmu_app_create     ();

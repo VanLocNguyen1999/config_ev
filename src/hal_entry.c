@@ -21,7 +21,7 @@ static void sm_hal_timer1_cb(void* _arg){
 static void sm_hal_timer2_cb(void* _arg){
 
     sm_pmu_app_t* app = (sm_pmu_app_t*)_arg;
-    sm_sch_process(app->m_sch_task);
+//    sm_sch_process(app->m_sch_task);
 }
 
 static void sm_hal_timer4_cb(void* _arg){
@@ -57,6 +57,47 @@ void hal_entry(void){
     while(1){
 
     	R_BSP_SoftwareDelay(1, BSP_DELAY_UNITS_MILLISECONDS);
-        sm_pmu_uart_process(pmu);
+//        sm_pmu_uart_process(pmu);
+    }
+}
+
+static void receive_byte(char c){
+
+    static char buf[64];
+    static unsigned int i = 0;
+    static int overflow = 0;
+
+    if (c == '\n') {
+        buf[i] = '\0';
+        if (!overflow &&
+            sscanf(buf, "%lu,%lu,", &g_pmu_app->speed_rpm, &g_pmu_app->hall_position_counter) == 2) {
+        }
+        i = 0;
+        overflow = 0;
+    } else if (!overflow) {
+        if (i < sizeof(buf) - 1)
+            buf[i++] = c;
+        else
+            overflow = 1;
+    }
+}
+
+void uart_io_callback(uart_callback_args_t *p_args){
+
+    switch (p_args->event){
+        case UART_EVENT_RX_COMPLETE:    ///< Receive complete event
+            break;
+        case UART_EVENT_TX_COMPLETE:    ///< Transmit complete event
+//            sm_hal_uart_tx_irq(g_pmu_uart, (uint8_t)p_args->data);
+            break;
+        case UART_EVENT_RX_CHAR:        ///< Character received
+        	receive_byte((char)p_args->data);
+            break;
+        case UART_EVENT_ERR_PARITY:     ///< Parity error event
+        case UART_EVENT_ERR_FRAMING:    ///< Mode fault error event
+        case UART_EVENT_ERR_OVERFLOW:   ///< FIFO Overflow error event
+        case UART_EVENT_BREAK_DETECT:   ///< Break detect error event
+        case UART_EVENT_TX_DATA_EMPTY:  ///< Last byte is transmitting, ready for more data
+            break;
     }
 }
